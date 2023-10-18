@@ -30,7 +30,6 @@ export default Form = () => {
     <View style={styles.form}>
       <View style={styles.inputs}>
         <TextInput
-          value={destination}
           style={styles.textInput}
           onChangeText={(e) => setDestination(e)}
           placeholder="Откуда"
