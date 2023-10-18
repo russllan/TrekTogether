@@ -5,22 +5,28 @@ import TripCard from "../../components/tripCard/TripCard";
 
 export default function FoundTrips({ route }) {
   const enteredData = route.params;
-  const { startPoint, endPoint, date, passengers  } = enteredData;
+  const { startPoint, endPoint, date, passengers } = enteredData;
+
+  const filteredTrips = useMemo(() => {
+    return data?.filter((item) => {
+      return (
+        item.destination === startPoint &&
+        item.arrival === endPoint &&
+        item.selected === date &&
+        item.amount >= passengers
+      );
+    });
+  }, [startPoint, endPoint, date, passengers]);
 
   const renderCards = useMemo(
     () =>
-    data?.map((item) => (
+      filteredTrips?.map((item) => (
         <View key={item.model}>
           <TripCard props={item} />
-          <Text>{endPoint}</Text>
-          <Text>{date}</Text>
-          <Text>{passengers}</Text>
         </View>
       )),
-    [data]
+    [filteredTrips]
   );
-
-      console.log(startPoint);
 
   return <View style={styles.viewMain}>{renderCards}</View>;
 }

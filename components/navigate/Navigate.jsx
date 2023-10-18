@@ -65,7 +65,7 @@ export default Navigate = () => {
         <Stack.Screen name="Landing" component={LandingPage} />
         <Stack.Screen name="Main" component={TabNavigate} />
         <Stack.Screen name="FoundTrips" component={FoundTrips} options={({route}) => ({
-          data:route.params.enteredData,
+          data:route.params.newData,
           headerShown: true
         })} />
         {/* <Stack.Screen name="book" component={} options={({route}) => ({

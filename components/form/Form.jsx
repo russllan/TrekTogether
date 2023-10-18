@@ -3,15 +3,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
-
-import { data } from "../../constants/dataTrips";
 
 export default Form = () => {
   const [destination, setDestination] = useState("");
@@ -33,13 +30,14 @@ export default Form = () => {
     <View style={styles.form}>
       <View style={styles.inputs}>
         <TextInput
+          value={destination}
           style={styles.textInput}
-          onChange={(e) => setDestination(e)}
+          onChangeText={(e) => setDestination(e)}
           placeholder="Откуда"
         />
         <TextInput
           style={styles.textInput}
-          onChange={(e) => setArrival(e)}
+          onChangeText={(e) => setArrival(e)}
           placeholder="Куда"
         />
       </View>
@@ -89,7 +87,7 @@ export default Form = () => {
       <View style={styles.btnView}>
         <TouchableOpacity
           style={styles.gettik}
-          onPress={() => navigation.navigate("FoundTrips" , enteredData)}
+          onPress={() => navigation.navigate("FoundTrips", enteredData)}
         >
           <Text style={{ color: "#fff", textAlign: "center" }}>Поехали</Text>
         </TouchableOpacity>
