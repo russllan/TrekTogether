@@ -1,8 +1,11 @@
-import MainStack from "./components/navigate/Navigate";
+import Navigate from "./components/navigate/Navigate";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 export default function App() {
-
   return (
-      <MainStack />
+    <Provider store={store}>
+      <Navigate />
+    </Provider>
   );
 }

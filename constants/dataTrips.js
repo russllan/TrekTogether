@@ -2,7 +2,7 @@ export const data = [
   {
     destination: "Бишкек",
     arrival: "Ош",
-    selected: "2023-10-18",
+    selected: "2023-10-19",
     arrivalDate: "2023-10-19",
     amount: 4,
     driver: "Кубатбек",
@@ -17,7 +17,7 @@ export const data = [
   {
     destination: "Бишкек",
     arrival: "Чолпон-Ата",
-    selected: "2023-10-18",
+    selected: "2023-10-19",
     arrivalDate: "2023-10-20",
     amount: 4,
     driver: "Русланбек",
@@ -26,13 +26,13 @@ export const data = [
     price: 3000,
     time: "20:00",
     timeArrival: "21:00",
-    driverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfSSz7czT2Ex0mj6B3J0uS6gOmsmnUr6yqzg&usqp=CAU",
+    driverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFvWEC5rEnwVLeNkBbKCJTC4qZCV0qE4qc-g&usqp=CAU",
     carImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyw5bKRLKodmY_Em-p8ttAQlEVD6ylWA0pKA&usqp=CAU"
   },
   {
     destination: "Бишкек",
     arrival: "Каракол",
-    selected: "2023-10-18",
+    selected: "2023-10-19",
     arrivalDate: "2023-10-19",
     amount: 4,
     driver: "Элдосбек",
@@ -41,7 +41,7 @@ export const data = [
     price: 2400,
     time: "08:00",
     timeArrival: "13:00",
-    driverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfSSz7czT2Ex0mj6B3J0uS6gOmsmnUr6yqzg&usqp=CAU",
+    driverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIxVZvd5EX8-iwDQ-S-ao3egfsqE1xHp1qxw&usqp=CAU",
     carImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShct0-tbkGFPfU8_kxLECJsL2vj-g9aWWdYw&usqp=CAU"
   },
 ];

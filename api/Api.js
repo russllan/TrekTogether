@@ -1,4 +1,4 @@
-import { AuthService } from "./services/auth.services";
+import AuthService  from "./services/auth.services";
 
 const Api = {
     auth: new AuthService()

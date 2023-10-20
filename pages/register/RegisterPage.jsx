@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   TextInput,
   ImageBackground,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { register } from "../../store/slices/authSlice";
 
 export default function RegisterPage({ navigation }) {
   const [username, setUsername] = useState("");
@@ -14,12 +16,22 @@ export default function RegisterPage({ navigation }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const data = {
+    name: username,
+    password: password,
+    phoneNumber: phone,
+    isDriver: false
+  };
+
   const onSubmit = () => {
     if (username !== "") {
       if (phone !== "") {
         if (password !== "") {
           setError(!error);
           if (error === false) {
+            dispatch(register(data));
             navigation.navigate("Landing");
           }
         }
@@ -27,17 +39,12 @@ export default function RegisterPage({ navigation }) {
     }
   };
 
-  const data = {
-    username: username,
-    phone: phone,
-    password: password
-  }
-
   return (
     <ImageBackground
-      source={{uri: 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ2lufGVufDB8fDB8fHww&w=720'}}
-      style={{ flex: 1,
-        resizeMode: 'cover' }}
+      source={{
+        uri: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ2lufGVufDB8fDB8fHww&w=720",
+      }}
+      style={{ flex: 1, resizeMode: "cover" }}
     >
       <View style={styles.viewRegister}>
         <View style={{ flexDirection: "column", gap: 15 }}>

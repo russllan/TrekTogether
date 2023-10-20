@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import FoundTrips from "../../pages/foundTripsPage/FoundTripsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
+import AuthPage from "../../pages/authPage/AuthPage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,6 +64,7 @@ export default Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} >
+        <Stack.Screen name="Auth" component={AuthPage} />
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Landing" component={LandingPage} />
         <Stack.Screen name="Main" component={TabNavigate} />

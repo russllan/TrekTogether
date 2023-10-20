@@ -2,12 +2,12 @@ import { http } from "../http";
 
 
 class AuthService {
-    async postAuth( data ) {
-        const response = await http.post('token/', data);
+    async login( data ) {
+        const response = await http.post('api/auth/login', data);
         return response.data;
     }
-    async refreshToken( refresh) {
-        const response = await http.post('token/refresh/', refresh);
+    async register( registerData ) {
+        const response = await http.post('api/auth/register', registerData);
         return response.data;
     }
     // async logout() {
