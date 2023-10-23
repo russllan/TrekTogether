@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   View,
   StyleSheet,
@@ -7,8 +8,9 @@ import {
   TextInput,
   ImageBackground,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../store/slices/authSlice";
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export default function RegisterPage({ navigation }) {
   const [username, setUsername] = useState("");
@@ -17,26 +19,40 @@ export default function RegisterPage({ navigation }) {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
+  const { result } = useSelector((state) => state.auth.registerUser.result);
 
   const data = {
     name: username,
     password: password,
     phoneNumber: phone,
-    isDriver: false
+    isDriver: false,
   };
 
   const onSubmit = () => {
     if (username !== "") {
       if (phone !== "") {
         if (password !== "") {
-          setError(!error);
           if (error === false) {
             dispatch(register(data));
-            navigation.navigate("Landing");
+            console.log(result);
+            navigation.navigate("Auth");
           }
         }
       }
     }
+    setError(!error);
+ 
+    // fetch("http://192.168.178.14:5077/api/Cars")
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
+    //   return response.json(); // Парсим ответ как JSON
+    // })
+    // .then((data) => {
+    //   console.log("Полученные данные:", data);
+    // })
+ 
   };
 
   return (

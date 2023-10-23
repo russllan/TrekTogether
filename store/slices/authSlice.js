@@ -3,11 +3,13 @@ import Api from "../../api/Api";
 
 export const login = createAsyncThunk("login", async (data) => {
   const response = await Api.auth.login(data);
+  console.log(response);
   return response;
 });
 
 export const register = createAsyncThunk("register", async (registerData) => {
   const response = await Api.auth.register(registerData);
+  console.log(response)
   return response;
 });
 
