@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,22 +25,35 @@ export default function FoundTrips({ route }) {
   //   });
   // }, [startPoint, endPoint, date, passengers]);
 
-  const renderCards = useMemo(
-    () =>
-      result?.map((item) => (
-        <View key={item.id}>
-          <TripCard data={item} />
-        </View>
-      )),
-    [result]
+  // const renderCards = useMemo(
+  //   () =>
+  //     result?.map((item) => (
+  //       <View key={item.id}>
+  //         <TripCard data={item} />
+  //       </View>
+  //     )),
+  //   [result]
+  // );
+  // if (isLoading)
+  //   return (
+  //     <View>
+  //       <Text>Loading......</Text>
+  //     </View>
+  //   );
+
+  return (
+    <View style={styles.viewMain}>
+      {isLoading ? (
+        <Text>null</Text>
+      ) : (
+        result?.map((item) => (
+          <View>
+            <TripCard data={item} />
+          </View>
+        ))
+      )}
+    </View>
   );
-  if (isLoading)
-    return (
-      <View>
-        <Text>Loading......</Text>
-      </View>
-    );
-  return <View style={styles.viewMain}>{renderCards}</View>;
 }
 
 const styles = StyleSheet.create({
