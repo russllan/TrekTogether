@@ -6,14 +6,13 @@ import { trip } from "../../store/slices/tripSlice";
 
 export default function FoundTrips({ route }) {
   const enteredData = route.params;
-  const { startPoint, endPoint, date, passengers } = enteredData;
+  // const { startPoint, endPoint, date, passengers } = enteredData;
   const dispatch = useDispatch();
-  const [isLoading , setLoading] = useState(true);
-  const { result } = useSelector((state) => state.trip);
+  const { result, isLoading } = useSelector((state) => state.trip);
 
   useEffect(() => {
-    dispatch(trip(enteredData)).finally(() => setLoading(false));
-  }, [])
+    dispatch(trip(enteredData));
+  }, []);
 
   // const filteredTrips = useMemo(() => {
   //   return result?.filter((item) => {
@@ -28,14 +27,19 @@ export default function FoundTrips({ route }) {
 
   const renderCards = useMemo(
     () =>
-    result?.map((item) => (
+      result?.map((item) => (
         <View key={item.id}>
           <TripCard data={item} />
         </View>
       )),
     [result]
   );
-      if(isLoading) return <View><Text>Loading......</Text></View>
+  if (isLoading)
+    return (
+      <View>
+        <Text>Loading......</Text>
+      </View>
+    );
   return <View style={styles.viewMain}>{renderCards}</View>;
 }
 

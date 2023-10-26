@@ -22,6 +22,7 @@ const tripSlice = createSlice({
     Trip: {
       result: [],
       error: false,
+      isLoading: true,
     },
     AddTrip: {
       result: [],
@@ -37,6 +38,7 @@ const tripSlice = createSlice({
     builder.addCase(trip.fulfilled, (state, action) => {
       state.Trip.result = action.payload;
       state.Trip.error = false;
+      state.Trip.isLoading = false;
     });
     builder.addCase(addTrip.fulfilled, (state, action) => {
       state.AddTrip.result = action.payload;

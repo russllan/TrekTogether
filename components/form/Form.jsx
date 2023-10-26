@@ -20,10 +20,10 @@ export default Form = () => {
   const navigation = useNavigation()
 
   const enteredData = {
-    startPoint: destination,
-    endPoint: arrival,
-    date: selected,
-    passengers: amount
+    departureCity: destination,
+    arrivalCity: arrival,
+    departureData: selected,
+    availableSeats: amount
   };
 
   return (

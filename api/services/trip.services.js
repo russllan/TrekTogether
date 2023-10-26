@@ -3,6 +3,7 @@ import { http } from "../http";
 class TripService {
     async trip( data ) {
         const response = await http.post('Trip/search', data);
+        // const response = await http.post('marks', data);
         return response.data;
     }
     async addTrip( addTripData ) {
