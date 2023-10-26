@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,10 +8,11 @@ export default function FoundTrips({ route }) {
   const enteredData = route.params;
   const { startPoint, endPoint, date, passengers } = enteredData;
   const dispatch = useDispatch();
+  const [isLoading , setLoading] = useState(true);
   const { result } = useSelector((state) => state.trip);
 
   useEffect(() => {
-    dispatch(trip(enteredData));
+    dispatch(trip(enteredData)).finally(() => setLoading(false));
   }, [])
 
   // const filteredTrips = useMemo(() => {
@@ -34,7 +35,7 @@ export default function FoundTrips({ route }) {
       )),
     [result]
   );
-
+      if(isLoading) return <View><Text>Loading......</Text></View>
   return <View style={styles.viewMain}>{renderCards}</View>;
 }
 
