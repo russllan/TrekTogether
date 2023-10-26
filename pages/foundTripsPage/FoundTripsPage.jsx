@@ -1,31 +1,38 @@
-import React, { useMemo, useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { data } from "../../constants/dataTrips";
+import React, { useMemo, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
+import { useDispatch, useSelector } from "react-redux";
+import { trip } from "../../store/slices/tripSlice";
 
 export default function FoundTrips({ route }) {
   const enteredData = route.params;
   const { startPoint, endPoint, date, passengers } = enteredData;
+  const dispatch = useDispatch();
+  const { result } = useSelector((state) => state.trip);
 
-  const filteredTrips = useMemo(() => {
-    return data?.filter((item) => {
-      return (
-        item.destination === startPoint &&
-        item.arrival === endPoint &&
-        item.selected === date &&
-        item.amount >= passengers
-      );
-    });
-  }, [startPoint, endPoint, date, passengers]);
+  useEffect(() => {
+    dispatch(trip(enteredData));
+  }, [])
+
+  // const filteredTrips = useMemo(() => {
+  //   return result?.filter((item) => {
+  //     return (
+  //       item.departureCity === startPoint &&
+  //       item.arrivalCity === endPoint &&
+  //       item.departureData === date &&
+  //       item.availableSeats >= passengers
+  //     );
+  //   });
+  // }, [startPoint, endPoint, date, passengers]);
 
   const renderCards = useMemo(
     () =>
-      filteredTrips?.map((item) => (
-        <View key={item.model}>
-          <TripCard props={item} />
+    result?.map((item) => (
+        <View key={item.id}>
+          <TripCard data={item} />
         </View>
       )),
-    [filteredTrips]
+    [result]
   );
 
   return <View style={styles.viewMain}>{renderCards}</View>;

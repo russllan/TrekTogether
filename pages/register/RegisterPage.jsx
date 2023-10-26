@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import {
   View,
   StyleSheet,
@@ -7,10 +6,10 @@ import {
   TouchableOpacity,
   TextInput,
   ImageBackground,
+  Alert
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../store/slices/authSlice";
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export default function RegisterPage({ navigation }) {
   const [username, setUsername] = useState("");
@@ -34,6 +33,16 @@ export default function RegisterPage({ navigation }) {
         if (password !== "") {
           if (error === false) {
             dispatch(register(data));
+            Alert.alert(
+              'message',
+              'Вы зарегистрированы',
+              [
+                {
+                  text: 'ОК',
+                },
+              ],
+              { cancelable: false }
+            );
             console.log(result);
             navigation.navigate("Auth");
           }
@@ -41,18 +50,6 @@ export default function RegisterPage({ navigation }) {
       }
     }
     setError(!error);
- 
-    // fetch("http://192.168.178.14:5077/api/Cars")
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-    //   return response.json(); // Парсим ответ как JSON
-    // })
-    // .then((data) => {
-    //   console.log("Полученные данные:", data);
-    // })
- 
   };
 
   return (

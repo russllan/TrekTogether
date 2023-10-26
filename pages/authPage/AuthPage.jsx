@@ -28,12 +28,9 @@ export default function AuthPage() {
     if (userLogin !== "" && password !== "") {
       dispatch(login(data));
       if (error) {
-        Alert.alert(
-          "Заголовок диалогового окна",
-          "error.",
-          [{ text: "Отмена", style: "cancel" }, { text: "ОК" }],
-          { cancelable: false }
-        );
+        Alert.alert("Suesefull", "error.", [{ text: "Ok" }], {
+          cancelable: false,
+        });
       } else {
         navigation.navigate("Landing");
       }
