@@ -3,13 +3,12 @@ import { http } from "../http";
 class TripService {
     async trip( data ) {
         const response = await http.post('Trip/search', data);
-        // const response = await http.post('marks', data);
         return response.data;
     }
     async addTrip( addTripData ) {
-        const response = await http.post('Trip/register', addTripData);
-        console.log(response.status);
-        return response.status;
+        const response = await http.post('Trip/addTrip', addTripData);
+        console.log(response.data);
+        return response.data;
     }
     async getUsers(id) {
         const response = await http.get(`Trip/getUsers/${id}`);

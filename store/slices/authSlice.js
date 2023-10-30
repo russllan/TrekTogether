@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../api/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const login = createAsyncThunk("login", async (data) => {
   const response = await Api.auth.login(data);
@@ -20,7 +21,7 @@ const authSlice = createSlice({
     },
     registerUser: {
       result: [],
-      error: false
+      error: false,
     },
   },
   reducers: {},
@@ -28,17 +29,20 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.loginUser.result = action.payload;
       state.loginUser.error = false;
+      AsyncStorage.setItem("user", JSON.stringify(state.loginUser.result))
+        .then(() => console.log("User saved"))
+        .catch((error) => console.error("Error saved: ", error));
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.registerUser.result = action.payload;
       state.loginUser.error = false;
     });
     builder.addCase(register.rejected, (state) => {
-        state.registerUser.error = true;
-      });
-      builder.addCase(login.rejected, (state) => {
-        state.loginUser.error = true;
-      });
+      state.registerUser.error = true;
+    });
+    builder.addCase(login.rejected, (state) => {
+      state.loginUser.error = true;
+    });
   },
 });
 

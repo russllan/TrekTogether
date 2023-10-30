@@ -9,8 +9,8 @@ import MainPage from "../../pages/mainPage/MainPage";
 import TripsPage from "../../pages/trips/TripsPage";
 import SearchPage from "../../pages/CreatePage/CreatePage";
 
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import FoundTrips from "../../pages/foundTripsPage/FoundTripsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import AuthPage from "../../pages/authPage/AuthPage";
@@ -29,33 +29,18 @@ const TabNavigate = () => {
             iconName = "search";
           } else if (route.name === "Поездки") {
             iconName = "create"; // Замените на нужную иконку Ionicons
-            return <MaterialIcons name="drive-eta" size={24} color="green" />
+            return <MaterialIcons name="drive-eta" size={24} color="green" />;
           }
           // Возвращаем иконку Ionicons
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      <Tab.Screen
-        name="Поиск"
-        component={MainPage}
-      />
-      <Tab.Screen
-        name="Поездки"
-        component={TripsPage}
-      />
-      <Tab.Screen
-        name="Создать"
-        component={SearchPage}
-      />
-        <Tab.Screen
-        name="Уведомления"
-        component={SearchPage}
-      />
-      <Tab.Screen
-        name="Профиль"
-        component={SearchPage}
-      />
+      <Tab.Screen name="Поиск" component={MainPage} />
+      <Tab.Screen name="Поездки" component={TripsPage} />
+      <Tab.Screen name="Создать" component={SearchPage} />
+      <Tab.Screen name="Уведомления" component={SearchPage} />
+      <Tab.Screen name="Профиль" component={SearchPage} />
     </Tab.Navigator>
   );
 };
@@ -63,15 +48,27 @@ const TabNavigate = () => {
 export default Navigate = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Auth" component={AuthPage} />
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Landing" component={LandingPage} />
         <Stack.Screen name="Main" component={TabNavigate} />
-        <Stack.Screen name="FoundTrips" component={FoundTrips} options={({route}) => ({
-          data:route.params.newData,
-          headerShown: true
-        })} />
+        <Stack.Screen
+          name="FoundTrips"
+          component={FoundTrips}
+          options={({ route }) => ({
+            data: route.params.newData,
+            headerShown: true,
+          })}
+        />
+        <Stack.Screen
+          name="driverFilling"
+          component={FoundTrips}
+          options={({ route }) => ({
+            data: route.params.data,
+            headerShown: true,
+          })}
+        />
         {/* <Stack.Screen name="book" component={} options={({route}) => ({
           data: route.params.data,
           headerShown: false
