@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../api/Api";
 
-export const trip = createAsyncThunk("trip", async ( data ) => {
+export const trip = createAsyncThunk("trip", async (data) => {
   const response = await Api.trip.trip(data);
   return response;
 });
@@ -16,6 +16,11 @@ export const getUsers = createAsyncThunk("getUser", async (id) => {
   return response;
 });
 
+export const car = createAsyncThunk("car", async (carData) => {
+  const response = await Api.trip.postCar(carData);
+  return response;
+});
+
 const tripSlice = createSlice({
   name: "trip",
   initialState: {
@@ -26,12 +31,16 @@ const tripSlice = createSlice({
     },
     AddTrip: {
       result: [],
-      error: false
+      error: false,
     },
     User: {
       result: [],
-      error: false
-    }
+      error: false,
+    },
+    Car: {
+      result: [],
+      error: false,
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -56,6 +65,13 @@ const tripSlice = createSlice({
     });
     builder.addCase(getUsers.rejected, (state) => {
       state.User.error = true;
+    });
+    builder.addCase(car.fulfilled, (state, action) => {
+      state.Car.result = action.payload;
+      state.Car.error = false;
+    });
+    builder.addCase(car.rejected, (state) => {
+      state.Car.error = true;
     });
   },
 });

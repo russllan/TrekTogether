@@ -11,14 +11,26 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
+import { useDispatch, useSelector } from "react-redux";
+import { car } from "../../store/slices/tripSlice";
+
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
   const [endPoint, setEndPoint] = useState("");
+  const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [modalActive, setModalActive] = useState(false);
+  const [amount, setAmount] = useState(1);
+
   const [user, setUser] = useState(null);
 
+  const result = useSelector((state) => state.trip.Car.result);
+  const error = useSelector((state) => state.trip.Car.error);
+
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const newValue = Number(price);
 
   AsyncStorage.getItem("user")
     .then((value) => {
@@ -38,56 +50,87 @@ export default CreatePage = () => {
     console.log("Значение user:", user);
   }, [user]);
 
+  let a = 100;
+
   const data = {
     departureCity: startPoint,
     arrivalCity: endPoint,
     departureData: date,
-    // price: price,
-    // availableSeats: amount,
-    // driverId: userId,
-    // carId: 0
+    price: newValue,
+    availableSeats: amount,
+    driverId: user,
+    carId: a || 0,
   };
 
   const onSubmit = () => {
-    navigation.navigate("", data);
-  }
+    // navigation.navigate("", data);
+    dispatch(car(data));
+  };
 
   return (
     <View style={styles.mainView}>
       <View style={styles.wrapperView}>
         <TextInput
-          onChange={(e) => setStartPoint(e)}
+          onChangeText={(e) => setStartPoint(e)}
           style={styles.textInput}
           placeholder="Откуда"
         />
         <TextInput
-          onChange={(e) => setEndPoint(e)}
+          onChangeText={(e) => setEndPoint(e)}
           style={styles.textInput}
           placeholder="Куда"
         />
-        <TouchableOpacity
-          style={styles.select}
-          onPress={() => setModalActive(!modalActive)}
-        >
-          <Text>{date ? date : "Выбрать"}</Text>
-        </TouchableOpacity>
-        <Modal isVisible={modalActive}>
-          <Calendar
-            onDayPress={(day) => {
-              setDate(day.dateString);
-              setModalActive(!modalActive);
-            }}
-            markedDates={{
-              [date]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedDotColor: "orange",
-              },
-            }}
-          />
-        </Modal>
+        <TextInput
+          onChangeText={(e) => setPrice(e)}
+          value={price}
+          style={styles.textInput}
+          placeholder="Укажите стоимость поездки"
+          keyboardType="numeric"
+        />
+        <View style={styles.viewOptions}>
+          <View>
+            <TouchableOpacity
+              style={styles.select}
+              onPress={() => setModalActive(!modalActive)}
+            >
+              <Text>{date ? date : "Выбрать дату"}</Text>
+            </TouchableOpacity>
+            <Modal isVisible={modalActive}>
+              <Calendar
+                onDayPress={(day) => {
+                  setDate(day.dateString);
+                  setModalActive(!modalActive);
+                }}
+                markedDates={{
+                  [date]: {
+                    selected: true,
+                    disableTouchEvent: true,
+                    selectedDotColor: "orange",
+                  },
+                }}
+              />
+            </Modal>
+          </View>
+          <View style={styles.quantity}>
+            <TouchableOpacity
+              style={styles.operation}
+              onPress={() => (amount === 1 ? 1 : setAmount(amount - 1))}
+            >
+              <Text style={{ color: "silver" }}>—</Text>
+            </TouchableOpacity>
+            <View>
+              <Text>{amount}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.operation}
+              onPress={() => setAmount(amount + 1)}
+            >
+              <Text style={{ color: "#13f043", fontSize: 15 }}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btn} onPress>
+          <TouchableOpacity style={styles.btn} onPress={onSubmit}>
             <Text style={{ textAlign: "center" }}>Создать</Text>
           </TouchableOpacity>
         </View>
@@ -120,10 +163,31 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 7,
   },
+  viewOptions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   viewBtn: {},
   btn: {
     padding: 20,
     borderRadius: 7,
     backgroundColor: "black",
+  },
+  quantity: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
+    backgroundColor: "#fff",
+    borderColor: "#d9d9d9",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderRadius: 7,
+  },
+  operation: {
+    padding: 12,
+    borderRightWidth: 1,
+    borderRightColor: "#d9d9d9",
+    borderLeftColor: "#d9d9d9",
+    borderLeftWidth: 1,
   },
 });

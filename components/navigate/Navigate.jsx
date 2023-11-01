@@ -4,16 +4,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
+
 import LandingPage from "../../pages/LandingPage";
 import MainPage from "../../pages/mainPage/MainPage";
 import TripsPage from "../../pages/trips/TripsPage";
 import SearchPage from "../../pages/CreatePage/CreatePage";
-
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import FoundTrips from "../../pages/foundTripsPage/FoundTripsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import AuthPage from "../../pages/authPage/AuthPage";
+import DriverFilling from "../../pages/driverFilling/DriverFilling";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,8 +29,11 @@ const TabNavigate = () => {
           if (route.name === "Поиск") {
             iconName = "search";
           } else if (route.name === "Поездки") {
-            iconName = "create"; // Замените на нужную иконку Ionicons
+            iconName = "trips"; // Замените на нужную иконку Ionicons
             return <MaterialIcons name="drive-eta" size={24} color="green" />;
+          } else if (route.name === "Создать") {
+            iconName = "create";
+            return <Entypo name="plus" size={24} color="black" />;
           }
           // Возвращаем иконку Ionicons
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -63,7 +67,7 @@ export default Navigate = () => {
         />
         <Stack.Screen
           name="driverFilling"
-          component={FoundTrips}
+          component={DriverFilling}
           options={({ route }) => ({
             data: route.params.data,
             headerShown: true,

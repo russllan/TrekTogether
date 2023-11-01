@@ -14,6 +14,10 @@ class TripService {
         const response = await http.get(`Trip/getUsers/${id}`);
         return response.data;
     }
+    async postCar(carData) {
+        const response = await http.post("Cars", carData);
+        return response.data;
+    }
 }
 
 export default TripService;

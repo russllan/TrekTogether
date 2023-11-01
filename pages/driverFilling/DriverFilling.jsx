@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+// import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { RadioButton } from 'react-native-paper';
 import { radioOptions } from "../../constants/radioOptions";
 
