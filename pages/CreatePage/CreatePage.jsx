@@ -12,7 +12,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { car } from "../../store/slices/tripSlice";
+import { trip } from "../../store/slices/tripSlice";
+import DriverFilling from "../driverFilling/DriverFilling";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -21,11 +22,12 @@ export default CreatePage = () => {
   const [date, setDate] = useState("");
   const [modalActive, setModalActive] = useState(false);
   const [amount, setAmount] = useState(1);
+  const [car, setCar] = useState(0);
 
   const [user, setUser] = useState(null);
 
-  const result = useSelector((state) => state.trip.Car.result);
-  const error = useSelector((state) => state.trip.Car.error);
+  // const result = useSelector((state) => state.trip.Car.result);
+  // const error = useSelector((state) => state.trip.Car.error);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -50,8 +52,6 @@ export default CreatePage = () => {
     console.log("Значение user:", user);
   }, [user]);
 
-  let a = 100;
-
   const data = {
     departureCity: startPoint,
     arrivalCity: endPoint,
@@ -59,12 +59,12 @@ export default CreatePage = () => {
     price: newValue,
     availableSeats: amount,
     driverId: user,
-    carId: a || 0,
   };
 
   const onSubmit = () => {
     // navigation.navigate("", data);
-    dispatch(car(data));
+    // dispatch(trip(data));
+    <DriverFilling  dataTrip={data}  />
   };
 
   return (
