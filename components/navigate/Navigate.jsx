@@ -15,6 +15,7 @@ import FoundTrips from "../../pages/foundTripsPage/FoundTripsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import AuthPage from "../../pages/authPage/AuthPage";
 import DriverFilling from "../../pages/driverFilling/DriverFilling";
+import CreatePage from "../../pages/CreatePage/CreatePage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ const TabNavigate = () => {
     >
       <Tab.Screen name="Поиск" component={MainPage} />
       <Tab.Screen name="Поездки" component={TripsPage} />
-      <Tab.Screen name="Создать" component={SearchPage} />
+      <Tab.Screen name="Создать" component={CreatePage} />
       <Tab.Screen name="Уведомления" component={SearchPage} />
       <Tab.Screen name="Профиль" component={SearchPage} />
     </Tab.Navigator>
@@ -69,7 +70,7 @@ export default Navigate = () => {
           name="driverFilling"
           component={DriverFilling}
           options={({ route }) => ({
-            data: route.params.data,
+            data: route.params.dataTrip,
             headerShown: true,
           })}
         />

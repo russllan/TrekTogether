@@ -7,7 +7,7 @@ import { trip } from "../../store/slices/tripSlice";
 export default function FoundTrips({ route }) {
   const enteredData = route.params;
   const dispatch = useDispatch();
-  const result = useSelector((state) => state.trip.result);
+  const result = useSelector((state) => state.trip.Trip.result);
   const isLoading = useSelector((state) => state.trip.isLoading);
 
   useEffect(() => {

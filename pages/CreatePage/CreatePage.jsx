@@ -24,7 +24,7 @@ export default CreatePage = () => {
   const [amount, setAmount] = useState(1);
   const [car, setCar] = useState(0);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(0);
 
   // const result = useSelector((state) => state.trip.Car.result);
   // const error = useSelector((state) => state.trip.Car.error);
@@ -34,23 +34,19 @@ export default CreatePage = () => {
 
   const newValue = Number(price);
 
-  AsyncStorage.getItem("user")
-    .then((value) => {
+  const GetUserID = async () => {
+    try {
+      const value = await AsyncStorage.getItem('user');
       if (value !== null) {
         const userData = JSON.parse(value);
-        setUser(userData);
-        console.log("значение: ", user);
-      } else {
-        console.log("значение не найдено");
+        console.log(userData.id);
+        setUser(userData.id);
+        return userData.id;
       }
-    })
-    .catch((error) => {
-      console.error("Ошибка при получении данных из AsyncStorage: ", error);
-    });
-
-  useEffect(() => {
-    console.log("Значение user:", user);
-  }, [user]);
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
 
   const data = {
     departureCity: startPoint,
@@ -62,9 +58,8 @@ export default CreatePage = () => {
   };
 
   const onSubmit = () => {
-    // navigation.navigate("", data);
-    // dispatch(trip(data));
-    <DriverFilling  dataTrip={data}  />
+    navigation.navigate("driverFilling", data);
+    // return <DriverFilling dataTrip={data}  />
   };
 
   return (

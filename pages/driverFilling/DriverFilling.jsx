@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { car, trip } from "../../store/slices/tripSlice";
+import { addTrip, car } from "../../store/slices/tripSlice";
 
-export default function DriverFilling({ dataTrip }) {
+export default function DriverFilling({ route }) {
+  const dataTrip = route.params;
   const [mark, setMark] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
@@ -23,12 +24,13 @@ export default function DriverFilling({ dataTrip }) {
 
   const data = {
     name: mark,
-    carMake: model,
-    carModel: year,
-    carYear: number,
+    gosNomer: number,
+    carModel: model,
+    carYear: year,
   };
 
   const onSubmit = () => {
+    console.log(dataTrip);
     dispatch(car(data));
     setBtn(!btn);
   };
@@ -39,7 +41,7 @@ export default function DriverFilling({ dataTrip }) {
   }
 
   const onCreate = () => {
-    dispatch(trip(newDataTrip));
+    dispatch(addTrip(newDataTrip));
   };
 
   return (
