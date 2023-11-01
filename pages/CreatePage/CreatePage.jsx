@@ -48,6 +48,8 @@ export default CreatePage = () => {
     }
   };
 
+  GetUserID();
+
   const data = {
     departureCity: startPoint,
     arrivalCity: endPoint,

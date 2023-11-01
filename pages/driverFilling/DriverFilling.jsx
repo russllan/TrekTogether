@@ -37,7 +37,7 @@ export default function DriverFilling({ route }) {
 
   const newDataTrip = {
     ...dataTrip,
-    carId: result.carId
+    carId: result.id
   }
 
   const onCreate = () => {
