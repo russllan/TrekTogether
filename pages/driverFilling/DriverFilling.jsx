@@ -28,6 +28,7 @@ export default function DriverFilling({ route }) {
     gosNomer: number,
     carModel: model,
     carYear: year,
+    userId: dataTrip.driverId
   };
 
   const onSubmit = () => {

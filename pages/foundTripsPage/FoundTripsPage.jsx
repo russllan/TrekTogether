@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
 import { trip } from "../../store/slices/tripSlice";
@@ -8,7 +8,7 @@ export default function FoundTrips({ route }) {
   const enteredData = route.params;
   const dispatch = useDispatch();
   const result = useSelector((state) => state.trip.Trip.result);
-  const isLoading = useSelector((state) => state.trip.isLoading);
+  const isLoading = useSelector((state) => state.trip.Trip.isLoading);
 
   useEffect(() => {
     dispatch(trip(enteredData));

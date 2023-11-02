@@ -3,7 +3,7 @@ import Api from "../../api/Api";
 
 export const trip = createAsyncThunk("trip", async (data) => {
   const response = await Api.trip.trip(data);
-  console.log(response)
+  console.log(response);
   return response;
 });
 
