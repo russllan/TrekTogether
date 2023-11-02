@@ -5,15 +5,15 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+import { gStyles } from "../../assets/global styles/styles";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-import { useDispatch, useSelector } from "react-redux";
-import { trip } from "../../store/slices/tripSlice";
-import DriverFilling from "../driverFilling/DriverFilling";
+import { useDispatch } from "react-redux";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -69,18 +69,18 @@ export default CreatePage = () => {
       <View style={styles.wrapperView}>
         <TextInput
           onChangeText={(e) => setStartPoint(e)}
-          style={styles.textInput}
+          style={gStyles.textInput}
           placeholder="Откуда"
         />
         <TextInput
           onChangeText={(e) => setEndPoint(e)}
-          style={styles.textInput}
+          style={gStyles.textInput}
           placeholder="Куда"
         />
         <TextInput
           onChangeText={(e) => setPrice(e)}
           value={price}
-          style={styles.textInput}
+          style={gStyles.textInput}
           placeholder="Укажите стоимость поездки"
           keyboardType="numeric"
         />
@@ -149,11 +149,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     borderColor: "white",
-  },
-  textInput: {
-    backgroundColor: "#d9d9d9",
-    padding: 12,
-    borderRadius: 7,
   },
   select: {
     backgroundColor: "#d9d9d9",

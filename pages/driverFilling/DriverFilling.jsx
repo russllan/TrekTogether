@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, car } from "../../store/slices/tripSlice";
 
@@ -37,8 +38,8 @@ export default function DriverFilling({ route }) {
 
   const newDataTrip = {
     ...dataTrip,
-    carId: result.id
-  }
+    carId: result.id,
+  };
 
   const onCreate = () => {
     dispatch(addTrip(newDataTrip));
@@ -47,27 +48,39 @@ export default function DriverFilling({ route }) {
   return (
     <View style={styles.viewMain}>
       <View style={styles.viewWrapper}>
-        <Text>Какой у вас Автомобиль?</Text>
+        <Text style={gStyles.text}>Какой у вас Автомобиль?</Text>
         <View style={styles.inputs}>
-          <TextInput onChangeText={(e) => setMark(e)} placeholder="Марка" />
-          <TextInput onChangeText={(e) => setModel(e)} placeholder="Модель" />
+          <TextInput
+            onChangeText={(e) => setMark(e)}
+            style={gStyles.textInput}
+            placeholder="Марка"
+          />
+          <TextInput
+            onChangeText={(e) => setModel(e)}
+            style={gStyles.textInput}
+            placeholder="Модель"
+          />
           <TextInput
             onChangeText={(e) => setYear(e)}
             placeholder="Год выпуска"
+            style={gStyles.textInput}
           />
           <TextInput
             onChangeText={(e) => setNumber(e)}
             placeholder="Госномер"
+            style={gStyles.textInput}
           />
         </View>
-        <TouchableOpacity onPress={onSubmit}>
-          <Text>Сохранить</Text>
-        </TouchableOpacity>
-        {btn ? (
-          <TouchableOpacity onPress={onCreate}>
-            <Text>Создать поездку</Text>
+        <View style={styles.viewBtn}>
+          <TouchableOpacity onPress={onSubmit} style={gStyles.btn}>
+            <Text>Сохранить</Text>
           </TouchableOpacity>
-        ) : null}
+          {btn ? (
+            <TouchableOpacity onPress={onCreate} style={gStyles.btn}>
+              <Text>Создать поездку</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </View>
     </View>
   );
@@ -76,5 +89,16 @@ export default function DriverFilling({ route }) {
 const styles = StyleSheet.create({
   viewMain: {
     flex: 1,
+    top: 60,
   },
+  viewWrapper: { padding: 20 },
+  inputs: {
+    gap: 12,
+    marginTop: 10,
+    marginBottom: 40,
+  },
+  viewBtn: {
+    alignItems: "center",
+    gap: 15
+  }
 });

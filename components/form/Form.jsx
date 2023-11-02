@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { gStyles } from "../../assets/global styles/styles";
+
 import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
@@ -85,7 +87,7 @@ export default Form = () => {
       <View style={styles.text}></View>
       <View style={styles.btnView}>
         <TouchableOpacity
-          style={styles.gettik}
+          style={gStyles.btn}
           onPress={() => navigation.navigate("FoundTrips", enteredData)}
         >
           <Text style={{ color: "#fff", textAlign: "center" }}>Поехали</Text>
@@ -134,10 +136,5 @@ const styles = StyleSheet.create({
   text: {},
   btnView: {
     paddingTop: 30,
-  },
-  gettik: {
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: "#13f043",
   },
 });
