@@ -33,14 +33,17 @@ const tripSlice = createSlice({
     AddTrip: {
       result: [],
       error: false,
+      isLoading: true
     },
     User: {
       result: [],
       error: false,
+      isLoading: true
     },
     Car: {
       result: [],
       error: false,
+      isLoading: true
     },
   },
   reducers: {},
@@ -50,29 +53,47 @@ const tripSlice = createSlice({
       state.Trip.error = false;
       state.Trip.isLoading = false;
     });
+    builder.addCase(trip.pending, (state) => {
+      state.Trip.isLoading = true;
+    });
+    builder.addCase(trip.rejected, (state) => {
+      state.Trip.error = true;
+      state.Trip.isLoading = false;
+    });
     builder.addCase(addTrip.fulfilled, (state, action) => {
       state.AddTrip.result = action.payload;
       state.AddTrip.error = false;
+      state.AddTrip.isLoading = false;
+    });
+    builder.addCase(addTrip.pending, (state) => {
+      state.AddTrip.isLoading = true;
+    });
+    builder.addCase(addTrip.rejected, (state) => {
+      state.AddTrip.error = true;
+      state.AddTrip.isLoading = false;
     });
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.User.result = action.payload;
       state.User.error = false;
+      state.User.isLoading = false;
     });
-    builder.addCase(trip.rejected, (state) => {
-      state.Trip.error = true;
-    });
-    builder.addCase(addTrip.rejected, (state) => {
-      state.AddTrip.error = true;
+    builder.addCase(getUsers.pending, (state) => {
+      state.User.isLoading = true;
     });
     builder.addCase(getUsers.rejected, (state) => {
       state.User.error = true;
+      state.User.isLoading = false;
     });
     builder.addCase(car.fulfilled, (state, action) => {
       state.Car.result = action.payload;
       state.Car.error = false;
     });
+    builder.addCase(car.pending, (state) => {
+      state.Car.isLoading = true;
+    });
     builder.addCase(car.rejected, (state) => {
       state.Car.error = true;
+      state.Car.isLoading = false;
     });
   },
 });

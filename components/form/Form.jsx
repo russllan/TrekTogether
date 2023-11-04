@@ -19,13 +19,13 @@ export default Form = () => {
   const [active, setActive] = useState(false);
   const [amount, setAmount] = useState(1);
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const enteredData = {
     departureCity: destination,
     arrivalCity: arrival,
     departureData: selected,
-    availableSeats: amount
+    availableSeats: amount,
   };
 
   return (
@@ -52,21 +52,21 @@ export default Form = () => {
           </Text>
         </TouchableOpacity>
         <View style={styles.quantity}>
-          <View style={styles.operation}>
-            <TouchableOpacity
-              onPress={() => (amount === 1 ? 1 : setAmount(amount - 1))}
-            >
-              <Text style={{ color: "silver" }}>—</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.operation}
+            onPress={() => (amount === 1 ? 1 : setAmount(amount - 1))}
+          >
+            <Text style={{ color: "silver" }}>—</Text>
+          </TouchableOpacity>
           <View>
             <Text>{amount}</Text>
           </View>
-          <View style={styles.operation}>
-            <TouchableOpacity onPress={() => setAmount(amount + 1)}>
-              <Text style={{ color: "#13f043", fontSize: 15 }}>+</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.operation}
+            onPress={() => setAmount(amount + 1)}
+          >
+            <Text style={{ color: "#13f043", fontSize: 15 }}>+</Text>
+          </TouchableOpacity>
         </View>
         <Modal isVisible={active}>
           <Calendar

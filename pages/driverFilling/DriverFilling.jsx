@@ -6,7 +6,9 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, car } from "../../store/slices/tripSlice";
@@ -22,6 +24,8 @@ export default function DriverFilling({ route }) {
   const result = useSelector((state) => state.trip.Car.result);
 
   const dispatch = useDispatch();
+
+  const navigation = useNavigation();
 
   const data = {
     name: mark,
@@ -44,6 +48,17 @@ export default function DriverFilling({ route }) {
 
   const onCreate = () => {
     dispatch(addTrip(newDataTrip));
+    Alert.alert(
+      'message',
+      'Ваша поездка созданна!',
+      [
+        {
+          text: 'ОК',
+        },
+      ],
+      { cancelable: false }
+    );
+    navigation.navigate("Main");
   };
 
   return (

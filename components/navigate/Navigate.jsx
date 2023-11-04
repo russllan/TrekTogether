@@ -41,8 +41,8 @@ const TabNavigate = () => {
         },
       })}
     >
-      <Tab.Screen name="Поиск" component={MainPage} />
       <Tab.Screen name="Поездки" component={TripsPage} />
+      <Tab.Screen name="Поиск" component={MainPage} />
       <Tab.Screen name="Создать" component={CreatePage} />
       <Tab.Screen name="Уведомления" component={SearchPage} />
       <Tab.Screen name="Профиль" component={SearchPage} />

@@ -9,11 +9,9 @@ import { gStyles } from "../../assets/global styles/styles";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-
-import { useDispatch } from "react-redux";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -22,7 +20,6 @@ export default CreatePage = () => {
   const [date, setDate] = useState("");
   const [modalActive, setModalActive] = useState(false);
   const [amount, setAmount] = useState(1);
-  const [car, setCar] = useState(0);
 
   const [user, setUser] = useState(0);
 
@@ -30,25 +27,26 @@ export default CreatePage = () => {
   // const error = useSelector((state) => state.trip.Car.error);
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const newValue = Number(price);
 
-  const GetUserID = async () => {
-    try {
-      const value = await AsyncStorage.getItem('user');
-      if (value !== null) {
-        const userData = JSON.parse(value);
-        console.log(userData.id);
-        setUser(userData.id);
-        return userData.id;
+  useEffect(() => {
+    const GetUserID = async () => {
+      try {
+        const value = await AsyncStorage.getItem("user");
+        if (value !== null) {
+          const userData = JSON.parse(value);
+          console.log(userData.id);
+          setUser(userData.id);
+          return userData.id;
+        }
+      } catch (error) {
+        // Error retrieving data
       }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
+    };
 
-  GetUserID();
+    GetUserID();
+  }, []);
 
   const data = {
     departureCity: startPoint,
@@ -61,7 +59,10 @@ export default CreatePage = () => {
 
   const onSubmit = () => {
     navigation.navigate("driverFilling", data);
-    // return <DriverFilling dataTrip={data}  />
+    setStartPoint("");
+    setEndPoint("");
+    setPrice("");
+    setDate("");
   };
 
   return (
@@ -127,7 +128,7 @@ export default CreatePage = () => {
           </View>
         </View>
         <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.btn} onPress={onSubmit}>
+          <TouchableOpacity style={gStyles.btn} onPress={onSubmit}>
             <Text style={{ textAlign: "center" }}>Создать</Text>
           </TouchableOpacity>
         </View>
