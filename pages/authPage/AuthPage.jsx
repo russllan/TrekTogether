@@ -22,7 +22,7 @@ export default function AuthPage() {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { error } = useSelector((state) => state.auth);
+  const error = useSelector((state) => state.auth.loginUser.error);
 
   onSubmit = () => {
     if (userLogin !== "" && password !== "") {
