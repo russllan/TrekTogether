@@ -1,9 +1,18 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Absence from "../../components/absence/Absence";
+import { useSelector } from "react-redux";
+import TripCard from "../../components/tripCard/TripCard";
 
 export default TripsPage = () => {
   const [active, setActive] = useState(true);
+
+  const result = useSelector((state) => state.trip.Trip.result);
+
+  const renderActiveCard = useMemo(
+    () => result?.map((item) => <TripCard data={item} />),
+    [result]
+  );
 
   return (
     <View style={styles.trip}>
@@ -22,7 +31,11 @@ export default TripsPage = () => {
       <View style={styles.wrapperAbense}>
         {active ? (
           <View style={styles.abense}>
-            <Absence title={"У вас нет активных поездок"} />
+            {result ? (
+              renderActiveCard
+            ) : (
+              <Absence title={"У вас нет активных поездок"} />
+            )}
           </View>
         ) : (
           <View style={styles.abense}>
@@ -71,5 +84,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
 });
