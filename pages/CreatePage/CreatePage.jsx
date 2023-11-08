@@ -10,8 +10,8 @@ import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 
 import { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { GetUserID } from "../../App";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -21,43 +21,29 @@ export default CreatePage = () => {
   const [modalActive, setModalActive] = useState(false);
   const [amount, setAmount] = useState(1);
 
-  const [user, setUser] = useState(0);
+  const [user, setUser] = useState(null);
 
   // const result = useSelector((state) => state.trip.Car.result);
   // const error = useSelector((state) => state.trip.Car.error);
 
   const navigation = useNavigation();
-
-  const newValue = Number(price);
-
+  
   useEffect(() => {
-    const GetUserID = async () => {
-      try {
-        const value = await AsyncStorage.getItem("user");
-        if (value !== null) {
-          const userData = JSON.parse(value);
-          console.log(userData.id);
-          setUser(userData.id);
-          return userData.id;
-        }
-      } catch (error) {
-        // Error retrieving data
-      }
+    setUser(GetUserID());
+  }, []);
+  
+  const onSubmit = () => {
+    const data = {
+      departureCity: startPoint,
+      arrivalCity: endPoint,
+      departureData: date,
+      price: Number(price),
+      availableSeats: amount,
+      driverId: user,
     };
 
-    GetUserID();
-  }, []);
+    console.log("awd" + data.user);
 
-  const data = {
-    departureCity: startPoint,
-    arrivalCity: endPoint,
-    departureData: date,
-    price: newValue,
-    availableSeats: amount,
-    driverId: user,
-  };
-
-  const onSubmit = () => {
     navigation.navigate("driverFilling", data);
     setStartPoint("");
     setEndPoint("");
@@ -65,6 +51,8 @@ export default CreatePage = () => {
     setDate("");
   };
 
+  // if(user !== null) return <View><Text>Loading...</Text></View>
+  
   return (
     <View style={styles.mainView}>
       <View style={styles.wrapperView}>
@@ -91,7 +79,7 @@ export default CreatePage = () => {
               style={styles.select}
               onPress={() => setModalActive(!modalActive)}
             >
-              <Text>{date ? date : "Выбрать дату"}</Text>
+              <Text>{date || "Выбрать дату"}</Text>
             </TouchableOpacity>
             <Modal isVisible={modalActive}>
               <Calendar

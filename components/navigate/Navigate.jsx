@@ -76,7 +76,7 @@ export default Navigate = () => {
         />
         {/* <Stack.Screen name="book" component={} options={({route}) => ({
           data: route.params.data,
-          headerShown: false
+          headerShown: true
         })} /> */}
       </Stack.Navigator>
     </NavigationContainer>
