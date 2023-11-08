@@ -18,6 +18,10 @@ class TripService {
         const response = await http.post("Cars", carData);
         return response.data;
     }
+    async bookTrip(bookData) {
+        const response = await http.post("UserTrip/addUserToTrip", bookData);
+        return response.data;
+    }
 }
 
 export default TripService;

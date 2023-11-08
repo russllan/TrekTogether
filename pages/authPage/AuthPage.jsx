@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/authSlice";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AuthPage() {
   const [userLogin, setLogin] = useState("");
@@ -23,6 +24,30 @@ export default function AuthPage() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const error = useSelector((state) => state.auth.loginUser.error);
+
+  const gettingUser = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("user");
+      if (userId !== null) {
+        const res = JSON.parse(userId);
+        return res;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const isRegistered = await gettingUser();
+      if (isRegistered) {
+        navigation.navigate("Landing");
+      }
+    })();
+  }, []);
 
   onSubmit = () => {
     if (userLogin !== "" && password !== "") {

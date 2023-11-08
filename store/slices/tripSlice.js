@@ -22,30 +22,42 @@ export const car = createAsyncThunk("car", async (carData) => {
   return response;
 });
 
+export const bookTrip = createAsyncThunk("book", async (bookData) => {
+  const response = await Api.trip.bookTrip(bookData);
+  return response;
+});
+
+const initState = {
+  Trip: {
+    result: [],
+    error: false,
+    isLoading: true,
+  },
+  AddTrip: {
+    result: [],
+    error: false,
+    isLoading: true,
+  },
+  User: {
+    result: [],
+    error: false,
+    isLoading: true,
+  },
+  Car: {
+    result: [],
+    error: false,
+    isLoading: true,
+  },
+  Book: {
+    result: [],
+    error: false,
+    isLoading: true,
+  },
+};
+
 const tripSlice = createSlice({
   name: "trip",
-  initialState: {
-    Trip: {
-      result: [],
-      error: false,
-      isLoading: true,
-    },
-    AddTrip: {
-      result: [],
-      error: false,
-      isLoading: true
-    },
-    User: {
-      result: [],
-      error: false,
-      isLoading: true
-    },
-    Car: {
-      result: [],
-      error: false,
-      isLoading: true
-    },
-  },
+  initialState: initState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(trip.fulfilled, (state, action) => {
@@ -94,6 +106,18 @@ const tripSlice = createSlice({
     builder.addCase(car.rejected, (state) => {
       state.Car.error = true;
       state.Car.isLoading = false;
+    });
+    builder.addCase(bookTrip.fulfilled, (state, action) => {
+      state.Book.result = action.payload;
+      state.Book.error = false;
+      state.Book.isLoading = false;
+    });
+    builder.addCase(bookTrip.pending, (state) => {
+      state.Book.isLoading = true;
+    });
+    builder.addCase(bookTrip.rejected, (state) => {
+      state.Book.error = true;
+      state.Book.isLoading = false;
     });
   },
 });
