@@ -33,78 +33,83 @@ export default function TripCard({ data, isTrip }) {
     // }
   };
 
-    return (
-      <View style={styles.viewTrip}>
-        <View style={styles.viewWrapper}>
-          <View style={styles.viewLeft}>
-            <View style={styles.viewTop}>
-              <Text>{isTrip ? data.trip.departureData : data.departureData}</Text>
-              {/* <Text>{props.time}</Text> */}
-              <Text>{isTrip ? data.trip.departureCity : data.departureCity}</Text>
-            </View>
-            <View style={styles.viewBottom}>
-              {/* <Text>{props.arrivalDate}</Text> */}
-              {/* <Text>{props.timeArrival}</Text> */}
-              <Text>{isTrip ? data.trip.arrivalCity :data.arrivalCity}</Text>
-            </View>
+  return (
+    <View style={styles.viewTrip}>
+      <View style={styles.viewWrapper}>
+        <View style={styles.viewLeft}>
+          <View style={styles.viewTop}>
+            <Text>{isTrip ? data.trip.departureData : data.departureData}</Text>
+            {/* <Text>{props.time}</Text> */}
+            <Text>{isTrip ? data.trip.departureCity : data.departureCity}</Text>
           </View>
-          <View style={styles.viewRight}>
-            <View style={styles.viewRightTop}>
-              <View style={{ flexDirection: "row" }}>
-                {/* <Image
+          <View style={styles.viewBottom}>
+            {/* <Text>{props.arrivalDate}</Text> */}
+            {/* <Text>{props.timeArrival}</Text> */}
+            <Text>{isTrip ? data.trip.arrivalCity : data.arrivalCity}</Text>
+          </View>
+        </View>
+        <View style={styles.viewRight}>
+          <View style={styles.viewRightTop}>
+            <View style={{ flexDirection: "row" }}>
+              {/* <Image
                   source={{ uri: data.driverImg }}
                   width={45}
                   height={45}
                   borderRadius={30}
                 /> */}
-                <Text
-                  style={{
-                    width: 75,
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  {isTrip ? data.driver.name :data.driverName}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", padding: 7 }}>
-                {/* <Image
+              <Text
+                style={{
+                  width: 75,
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                }}
+              >
+                {isTrip ? data.driver.name : data.driverName}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", padding: 7 }}>
+              {/* <Image
                   source={{ uri: props.carImg }}
                   width={45}
                   height={45}
                   borderRadius={30}
                 /> */}
-                <Text
-                  style={{
-                    width: 75,
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  {isTrip ? data.car.name :data.carName}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.viewRightBottom}>
-              <Text>Свободные места: {isTrip ? data.trip.availableSeats : data.availableSeats}</Text>
               <Text
                 style={{
-                  fontSize: 20,
-                  color: "#13f043",
-                  borderBottomColor: "#d9d9d9",
-                  borderBottomWidth: 1,
+                  width: 75,
+                  textAlign: "center",
+                  verticalAlign: "middle",
                 }}
               >
-                {isTrip ? data.trip.price : data.price} сом
+                {isTrip ? data.car.name : data.carName}
               </Text>
             </View>
+          </View>
+          <View style={styles.viewRightBottom}>
+            <Text>
+              Свободные места:{" "}
+              {isTrip ? data.trip.availableSeats : data.availableSeats}
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#13f043",
+                borderBottomColor: "#d9d9d9",
+                borderBottomWidth: 1,
+              }}
+            >
+              {isTrip ? data.trip.price : data.price} сом
+            </Text>
+          </View>
+          {isTrip ? null : (
             <TouchableOpacity onPress={onSubmit} style={gStyles.btn}>
               <Text>Забронировать</Text>
             </TouchableOpacity>
-          </View>
+          )}
         </View>
       </View>
-    );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
