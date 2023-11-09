@@ -23,19 +23,21 @@ export default TripsPage = () => {
     getMyTrips();
   }, []);
 
+  const renderActiveCard = useMemo(
+    () =>
+      result?.map((item) => {
+        console.log(item);
+        return <TripCard isTrip={true} data={item} />;
+      }),
+    [result]
+  );
+
   if (isLoading)
     return (
       <View>
         <Text>Loading...</Text>
       </View>
     );
-
-    // const renderActiveCard = () => {
-    //      result?.map((item) => {
-    //         console.log(item);
-    //         return <TripCard isTrip={true} data={item} />;
-    //       });
-    // };
 
   return (
     <View style={styles.trip}>
@@ -54,14 +56,7 @@ export default TripsPage = () => {
       <View style={styles.wrapperAbense}>
         {active ? (
           <View style={styles.abense}>
-            {/* {result ? ( */}
-            {/* {result?.map((item) => (
-              <TripCard data={item} isTrip={true}/>
-            ))} */}
-            {renderActiveCard}
-            {/* ) : ( */}
-            {/* <Absence title={"У вас нет активных поездок"} /> */}
-            {/* )} */}
+            {result ? renderActiveCard : (<Absence title={"У вас нет активных поездок"} />)}
           </View>
         ) : (
           <View style={styles.abense}>
@@ -80,7 +75,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    // position: "absolute"
   },
   active: {
     width: "50%",
