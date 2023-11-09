@@ -17,17 +17,20 @@ export default function TripCard({ data }) {
     setUserId(GetUserID());
   }, []);
 
-  const onSubmit = () => {
+  const  onSubmit = async () => {
+    const s = await GetUserID();
     const bookData = {
-      userId: user,
+      userId: s,
       tripId: data.id,
     };
-    if (user !== undefined && data.id !== undefined) {
-      dispatch(bookTrip(bookData));
-      navigation.navigate("Main");
-    } else {
-      console.log("error id");
-    }
+    dispatch(bookTrip(bookData));
+    navigation.navigate("Main");
+    // if (user !== undefined && data.id !== undefined) {
+    //   dispatch(bookTrip(bookData));
+    //   navigation.navigate("Main");
+    // } else {
+    //   console.log("error id");
+    // }
   };
 
   return (
