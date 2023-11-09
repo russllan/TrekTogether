@@ -23,7 +23,7 @@ class TripService {
         return response.data;
     }
     async getTrip(tripId) {
-        const response = await http.post(`UserTrip/trip/${tripId}`);
+        const response = await http.get(`UserTrip/trip/${tripId}`);
         return response.data;
     }
 }

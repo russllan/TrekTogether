@@ -30,7 +30,6 @@ export const bookTrip = createAsyncThunk("book", async (bookData) => {
 
 export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
   const response = await Api.trip.getTrip(getTripId);
-  console.log(response);
   return response;
 });
 

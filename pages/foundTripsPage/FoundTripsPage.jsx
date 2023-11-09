@@ -22,7 +22,7 @@ export default function FoundTrips({ route }) {
       ) : (
         result?.map((item) => (
           <View>
-            <TripCard data={item} />
+            <TripCard isTrip={false} data={item} />
           </View>
         ))
       )}

@@ -28,9 +28,9 @@ export default CreatePage = () => {
 
   const navigation = useNavigation();
   
-  useEffect(() => {
-    setUser(GetUserID());
-  }, []);
+  // useEffect(() => {
+  //   setUser(GetUserID());
+  // }, []);
   
   const onSubmit = async () => {
     const s = await GetUserID();
@@ -45,7 +45,7 @@ export default CreatePage = () => {
 
     console.log("awd " + data);
 
-    navigation.navigate("driverFilling", data);
+    await navigation.navigate("driverFilling", data);
     setStartPoint("");
     setEndPoint("");
     setPrice("");

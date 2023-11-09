@@ -14,17 +14,28 @@ export default TripsPage = () => {
   const result = useSelector((state) => state.trip.GetTrip.result);
   const isLoading = useSelector((state) => state.trip.GetTrip.isLoading);
 
-  const renderActiveCard = useMemo(
-    isLoading ? null :
-    () => result?.map((item) => <TripCard data={item} />),
-    [result]
-  );
+  const getMyTrips = async () => {
+    const res = await GetUserID();
+    dispatch(getTrip(res));
+  };
 
   useEffect(() => {
-    dispatch(getTrip(GetUserID()));
+    getMyTrips();
   }, []);
 
-  if(isLoading) return <View><Text>Loading...</Text></View>
+  if (isLoading)
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+
+    // const renderActiveCard = () => {
+    //      result?.map((item) => {
+    //         console.log(item);
+    //         return <TripCard isTrip={true} data={item} />;
+    //       });
+    // };
 
   return (
     <View style={styles.trip}>
@@ -43,11 +54,14 @@ export default TripsPage = () => {
       <View style={styles.wrapperAbense}>
         {active ? (
           <View style={styles.abense}>
-            {result ? (
-              renderActiveCard
-            ) : (
-              <Absence title={"У вас нет активных поездок"} />
-            )}
+            {/* {result ? ( */}
+            {/* {result?.map((item) => (
+              <TripCard data={item} isTrip={true}/>
+            ))} */}
+            {renderActiveCard}
+            {/* ) : ( */}
+            {/* <Absence title={"У вас нет активных поездок"} /> */}
+            {/* )} */}
           </View>
         ) : (
           <View style={styles.abense}>
