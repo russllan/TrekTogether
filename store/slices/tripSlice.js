@@ -24,6 +24,7 @@ export const car = createAsyncThunk("car", async (carData) => {
 
 export const bookTrip = createAsyncThunk("book", async (bookData) => {
   const response = await Api.trip.bookTrip(bookData);
+  console.log(response);
   return response;
 });
 

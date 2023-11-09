@@ -8,7 +8,7 @@ export const GetUserID = async () => {
     const value = await AsyncStorage.getItem("user");
     if (value !== null) {
       const userData = JSON.parse(value);
-      console.log(userData.id);
+      console.log(userData);
       return userData.id;
     }
   } catch (error) {

@@ -32,17 +32,18 @@ export default CreatePage = () => {
     setUser(GetUserID());
   }, []);
   
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const s = await GetUserID();
     const data = {
       departureCity: startPoint,
       arrivalCity: endPoint,
       departureData: date,
       price: Number(price),
       availableSeats: amount,
-      driverId: user,
+      driverId: s,
     };
 
-    console.log("awd" + data.user);
+    console.log("awd " + data);
 
     navigation.navigate("driverFilling", data);
     setStartPoint("");

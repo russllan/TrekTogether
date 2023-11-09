@@ -7,7 +7,7 @@ import { GetUserID } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TripCard({ data }) {
-  const [user, setUserId] = useState();
+  const [user, setUserId] = useState(0);
 
   const navigation = useNavigation();
 
