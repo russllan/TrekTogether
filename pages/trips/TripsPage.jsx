@@ -1,18 +1,30 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Absence from "../../components/absence/Absence";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TripCard from "../../components/tripCard/TripCard";
+import { getTrip } from "../../store/slices/tripSlice";
+import { GetUserID } from "../../App";
 
 export default TripsPage = () => {
   const [active, setActive] = useState(true);
 
-  const result = useSelector((state) => state.trip.Trip.result);
+  const dispatch = useDispatch();
+
+  const result = useSelector((state) => state.trip.GetTrip.result);
+  const isLoading = useSelector((state) => state.trip.GetTrip.isLoading);
 
   const renderActiveCard = useMemo(
+    isLoading ? null :
     () => result?.map((item) => <TripCard data={item} />),
     [result]
   );
+
+  useEffect(() => {
+    dispatch(getTrip(GetUserID()));
+  }, []);
+
+  if(isLoading) return <View><Text>Loading...</Text></View>
 
   return (
     <View style={styles.trip}>

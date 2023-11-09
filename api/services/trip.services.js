@@ -22,6 +22,10 @@ class TripService {
         const response = await http.post("UserTrip/addUserToTrip", bookData);
         return response.data;
     }
+    async getTrip(tripId) {
+        const response = await http.post(`UserTrip/trip/${tripId}`);
+        return response.data;
+    }
 }
 
 export default TripService;
