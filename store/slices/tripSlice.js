@@ -28,6 +28,12 @@ export const bookTrip = createAsyncThunk("book", async (bookData) => {
   return response;
 });
 
+export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
+  const response = await Api.trip.getTrip(getTripId);
+  console.log(response);
+  return response;
+});
+
 const initState = {
   Trip: {
     result: [],
@@ -54,6 +60,11 @@ const initState = {
     error: false,
     isLoading: true,
   },
+  GetTrip: {
+    result: [],
+    error: false,
+    isLoading: true
+  }
 };
 
 const tripSlice = createSlice({
@@ -119,6 +130,17 @@ const tripSlice = createSlice({
     builder.addCase(bookTrip.rejected, (state) => {
       state.Book.error = true;
       state.Book.isLoading = false;
+    });
+    builder.addCase(getTrip.fulfilled, (state, action) => {
+      state.GetTrip.result = action.payload;
+      state.GetTrip.isLoading = false;
+    });
+    builder.addCase(getTrip.pending, (state) => {
+      state.GetTrip.isLoading = true;
+    });
+    builder.addCase(getTrip.rejected, (state) => {
+      state.GetTrip.error = true;
+      state.GetTrip.isLoading = false;
     });
   },
 });
