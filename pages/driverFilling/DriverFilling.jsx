@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   Alert
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, car } from "../../store/slices/tripSlice";
 
 export default function DriverFilling({ route }) {
-  const dataTrip = route.params;
+  const { dataTrip, carId } = route.params;
   const [mark, setMark] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
@@ -43,7 +43,7 @@ export default function DriverFilling({ route }) {
 
   const newDataTrip = {
     ...dataTrip,
-    carId: result.id,
+    carId: carId ? carId : result.id,
   };
 
   const onCreate = () => {
