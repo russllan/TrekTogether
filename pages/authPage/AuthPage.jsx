@@ -34,8 +34,8 @@ export default function AuthPage() {
       } else {
         return null;
       }
-    } catch (error) {
-      console.error("Error", error);
+    } catch (err) {
+      console.error("Error", err);
       return null;
     }
   };
@@ -44,22 +44,22 @@ export default function AuthPage() {
     (async () => {
       const isRegistered = await gettingUser();
       if (isRegistered) {
-        navigation.navigate("Landing");
+        navigation.navigate("Main");
       }
     })();
   }, []);
 
   onSubmit = () => {
-    if (userLogin !== "" && password !== "") {
-      dispatch(login(data));
-      if (error) {
-        Alert.alert("Suesefull", "error.", [{ text: "Ok" }], {
-          cancelable: false,
-        });
-      } else {
+    // if (userLogin !== "" && password !== "") {
+    //   dispatch(login(data));
+    //   if (error) {
+    //     Alert.alert("Suesefull", "error.", [{ text: "Ok" }], {
+    //       cancelable: false,
+    //     });
+    //   } else {
         navigation.navigate("Landing");
-      }
-    }
+    //   }
+    // }
   };
 
   return (

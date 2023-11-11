@@ -1,4 +1,11 @@
-import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import { useMemo, useState, useEffect } from "react";
 import Absence from "../../components/absence/Absence";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +33,6 @@ export default TripsPage = () => {
   const renderActiveCard = useMemo(
     () =>
       result?.map((item) => {
-        console.log(item);
         return <TripCard isTrip={true} data={item} />;
       }),
     [result]
@@ -55,9 +61,15 @@ export default TripsPage = () => {
       </TouchableOpacity>
       <View style={styles.wrapperAbense}>
         {active ? (
-          <View style={styles.abense}>
-            {result ? renderActiveCard : (<Absence title={"У вас нет активных поездок"} />)}
-          </View>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <View style={styles.abense}>
+              {result ? (
+                renderActiveCard
+              ) : (
+                <Absence title={"У вас нет активных поездок"} />
+              )}
+            </View>
+          </ScrollView>
         ) : (
           <View style={styles.abense}>
             <Absence title={"Вы ещё не совершали поездки в нашем сервисе"} />
@@ -70,8 +82,7 @@ export default TripsPage = () => {
 
 const styles = StyleSheet.create({
   trip: {
-    width: "100%",
-    height: 50,
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -103,5 +114,9 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  scrollViewContent: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
   },
 });

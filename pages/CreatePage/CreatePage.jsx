@@ -12,6 +12,7 @@ import Modal from "react-native-modal";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { GetUserID } from "../../App";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -27,33 +28,45 @@ export default CreatePage = () => {
   // const error = useSelector((state) => state.trip.Car.error);
 
   const navigation = useNavigation();
-  
+
   // useEffect(() => {
   //   setUser(GetUserID());
   // }, []);
-  
+
+  const getCarId = async () => {
+    const carId = await AsyncStorage.getItem("car");
+    if (carId !== null) {
+      const res = JSON.parse(carId);
+      return res;
+    } else {
+      return null;
+    }
+  };
+
   const onSubmit = async () => {
-    const s = await GetUserID();
+    const driverId = await GetUserID();
+    const car = await getCarId();
     const data = {
       departureCity: startPoint,
       arrivalCity: endPoint,
       departureData: date,
       price: Number(price),
       availableSeats: amount,
-      driverId: s,
+      driverId: driverId,
+      carId: car,
     };
 
     console.log("awd " + data);
-
-    await navigation.navigate("driverFilling", data);
+    navigation.navigate("driverFilling", {
+      dataTrip: data,
+      carId: data.carId,
+    });
     setStartPoint("");
     setEndPoint("");
     setPrice("");
     setDate("");
   };
 
-  // if(user !== null) return <View><Text>Loading...</Text></View>
-  
   return (
     <View style={styles.mainView}>
       <View style={styles.wrapperView}>
