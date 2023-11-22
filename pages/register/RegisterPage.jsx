@@ -18,20 +18,21 @@ export default function RegisterPage({ navigation }) {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const { result } = useSelector((state) => state.auth.registerUser.result);
+  const result = useSelector((state) => state.auth.registerUser.result);
 
   const data = {
     name: username,
     password: password,
     phoneNumber: phone,
     isDriver: false,
+    rating: 0,
   };
 
   const onSubmit = () => {
     if (username !== "") {
       if (phone !== "") {
         if (password !== "") {
-          if (error === false) {
+          if (error !== false) {
             dispatch(register(data));
             Alert.alert(
               'message',
@@ -44,7 +45,7 @@ export default function RegisterPage({ navigation }) {
               { cancelable: false }
             );
             console.log(result);
-            navigation.navigate("Auth");
+            return navigation.navigate("Auth");
           }
         }
       }

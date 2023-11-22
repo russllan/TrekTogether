@@ -112,8 +112,8 @@ const tripSlice = createSlice({
       state.Car.result = action.payload;
       state.Car.error = false;
       AsyncStorage.setItem("car", JSON.stringify(state.Car.result.id))
-        .then(() => console.log("User saved"))
-        .catch((error) => console.error("Error saved: ", error));
+        .then(() => console.log("Car saved"))
+        .catch((error) => console.error("Error car saved: ", error));
     });
     builder.addCase(car.pending, (state) => {
       state.Car.isLoading = true;

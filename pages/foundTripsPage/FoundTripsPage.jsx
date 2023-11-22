@@ -3,7 +3,6 @@ import { View, StyleSheet, Text } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
 import { trip } from "../../store/slices/tripSlice";
-// import { data } from "../../constants/dataTrips";
 
 export default function FoundTrips({ route }) {
   const enteredData = route.params;
