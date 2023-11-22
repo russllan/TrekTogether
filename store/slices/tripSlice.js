@@ -8,7 +8,9 @@ export const trip = createAsyncThunk("trip", async (data) => {
 });
 
 export const addTrip = createAsyncThunk("addTrip", async (addTripData) => {
+  console.log(addTripData);
   const response = await Api.trip.addTrip(addTripData);
+  console.log(response);
   return response;
 });
 

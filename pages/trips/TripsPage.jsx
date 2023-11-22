@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TripCard from "../../components/tripCard/TripCard";
 import { getTrip } from "../../store/slices/tripSlice";
 import { GetUserID } from "../../App";
+import { gStyles } from "../../assets/global styles/styles";
 
 export default TripsPage = () => {
   const [active, setActive] = useState(true);
@@ -54,9 +55,20 @@ export default TripsPage = () => {
         <Text style={styles.text}>Архив</Text>
       </TouchableOpacity>
       <View style={styles.wrapperAbense}>
+        <View
+          style={{ width: "100%", alignItems: "center" }}
+        >
+          <TouchableOpacity style={gStyles.btn} onPress={() => getMyTrips()}>
+            <Text>Обновить</Text>
+          </TouchableOpacity>
+        </View>
         {active ? (
           <View style={styles.abense}>
-            {result ? renderActiveCard : (<Absence title={"У вас нет активных поездок"} />)}
+            {result ? (
+              renderActiveCard
+            ) : (
+              <Absence title={"У вас нет активных поездок"} />
+            )}
           </View>
         ) : (
           <View style={styles.abense}>
@@ -97,7 +109,7 @@ const styles = StyleSheet.create({
   wrapperAbense: {
     width: "100%",
     position: "absolute",
-    top: 220,
+    top: 100,
   },
   abense: {
     width: "100%",
