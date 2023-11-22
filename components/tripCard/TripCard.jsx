@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch } from "react-redux";
@@ -7,15 +7,10 @@ import { GetUserID } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TripCard({ data, isTrip }) {
-  const [user, setUserId] = useState(0);
 
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   setUserId(GetUserID());
-  // }, []);
 
   const onSubmit = async () => {
     const s = await GetUserID();
@@ -25,12 +20,6 @@ export default function TripCard({ data, isTrip }) {
     };
     await dispatch(bookTrip(bookData));
     navigation.navigate("Main");
-    // if (user !== undefined && data.id !== undefined) {
-    //   dispatch(bookTrip(bookData));
-    //   navigation.navigate("Main");
-    // } else {
-    //   console.log("error id");
-    // }
   };
 
   return (

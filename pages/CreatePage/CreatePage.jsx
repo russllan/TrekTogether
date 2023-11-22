@@ -4,15 +4,19 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { gStyles } from "../../assets/global styles/styles";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { GetUserID } from "../../App";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { addTrip } from "../../store/slices/tripSlice";
+import { useDispatch } from "react-redux";
 
 export default CreatePage = () => {
   const [startPoint, setStartPoint] = useState("");
@@ -22,23 +26,25 @@ export default CreatePage = () => {
   const [modalActive, setModalActive] = useState(false);
   const [amount, setAmount] = useState(1);
 
-  const [user, setUser] = useState(null);
-
   // const result = useSelector((state) => state.trip.Car.result);
   // const error = useSelector((state) => state.trip.Car.error);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   setUser(GetUserID());
   // }, []);
 
   const getCarId = async () => {
-    const carId = await AsyncStorage.getItem("car");
-    if (carId !== null) {
-      const res = JSON.parse(carId);
-      return res;
-    } else {
+    try {
+      const carId = await AsyncStorage.getItem("car");
+      return carId ? JSON.parse(carId) : null;
+    } catch (error) {
+      console.error(
+        "Ошибка при получении информации о машине из AsyncStorage:",
+        error
+      );
       return null;
     }
   };
@@ -46,21 +52,76 @@ export default CreatePage = () => {
   const onSubmit = async () => {
     const driverId = await GetUserID();
     const car = await getCarId();
-    const data = {
-      departureCity: startPoint,
-      arrivalCity: endPoint,
-      departureData: date,
-      price: Number(price),
-      availableSeats: amount,
-      driverId: driverId,
-      carId: car,
-    };
+    let data = null;
+    if (car !== null) {
+      data = {
+        departureCity: startPoint,
+        arrivalCity: endPoint,
+        departureData: date,
+        price: Number(price),
+        availableSeats: amount,
+        driverId: driverId,
+        carId: car,
+      };
+    } else {
+      data = {
+        departureCity: startPoint,
+        arrivalCity: endPoint,
+        departureData: date,
+        price: Number(price),
+        availableSeats: amount,
+        driverId: driverId,
+      };
+    }
 
-    console.log("awd " + data);
-    navigation.navigate("driverFilling", {
-      dataTrip: data,
-      carId: data.carId,
-    });
+    if (car !== null) {
+      Alert.alert(
+        "Подтверждение",
+        "У вас уже есть добавленная машина, хотите изменить машину?",
+        [
+          {
+            text: "Нет",
+            style: "cancel",
+            onPress: () => {
+              dispatch(addTrip(data));
+              Alert.alert(
+                "message",
+                "Ваша поездка созданна!",
+                [
+                  {
+                    text: "ОК",
+                  },
+                ],
+                { cancelable: false }
+              );
+              navigation.navigate("Main");
+            },
+          },
+          {
+            text: "Да",
+            onPress: () => {
+              AsyncStorage.removeItem("car");
+              navigation.navigate("driverFilling", {
+                dataTrip: data,
+                carId: data.carId,
+              });
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      navigation.navigate("driverFilling", {
+        dataTrip: data,
+        carId: data.carId,
+      });
+    }
+
+    console.log("awd " + data.carId);
+    // navigation.navigate("driverFilling", {
+    //   dataTrip: data,
+    //   carId: data.carId,
+    // });
     setStartPoint("");
     setEndPoint("");
     setPrice("");

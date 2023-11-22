@@ -49,17 +49,17 @@ export default function AuthPage() {
     })();
   }, []);
 
-  onSubmit = () => {
-    // if (userLogin !== "" && password !== "") {
-    //   dispatch(login(data));
-    //   if (error) {
-    //     Alert.alert("Suesefull", "error.", [{ text: "Ok" }], {
-    //       cancelable: false,
-    //     });
-    //   } else {
+  onSubmit = async () => {
+    if (userLogin !== "" && password !== "") {
+      await dispatch(login(data));
+      if (error !== false) {
+        Alert.alert("Message", "Такого пользователя нет", [{ text: "Ok" }], {
+          cancelable: false,
+        });
+      } else {
         navigation.navigate("Landing");
-    //   }
-    // }
+      }
+    }
   };
 
   return (

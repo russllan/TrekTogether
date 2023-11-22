@@ -18,6 +18,7 @@ const authSlice = createSlice({
     loginUser: {
       result: [],
       error: false,
+      isLoading: false
     },
     registerUser: {
       result: [],
@@ -29,9 +30,18 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.loginUser.result = action.payload;
       state.loginUser.error = false;
+      state.loginUser.isLoading = false;
       AsyncStorage.setItem("user", JSON.stringify(state.loginUser.result))
-        .then(() => console.log("User saved"))
+        .then(() => console.log("User saved = " + action.payload))
         .catch((error) => console.error("Error saved: ", error));
+    });
+    builder.addCase(login.rejected, (state) => {
+      state.loginUser.error = true;
+      state.loginUser.isLoading = false;
+    });
+    builder.addCase(login.pending, (state) => {
+      state.loginUser.error = false;
+      state.loginUser.isLoading = true;
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.registerUser.result = action.payload;
@@ -39,9 +49,6 @@ const authSlice = createSlice({
     });
     builder.addCase(register.rejected, (state) => {
       state.registerUser.error = true;
-    });
-    builder.addCase(login.rejected, (state) => {
-      state.loginUser.error = true;
     });
   },
 });
