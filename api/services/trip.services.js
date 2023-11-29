@@ -26,6 +26,14 @@ class TripService {
         const response = await http.get(`UserTrip/trip/${tripId}`);
         return response.data;
     }
+    async deleteUserTrip(userId, ttripId) {
+        const response = await http.delete(`UserTrip/deleteUserTrip/${userId}/${ttripId}`);
+        return response.status;
+    }
+    async deleteTrip(id) {
+        const response = await http.delete(`Trip/deleteTrip/${id}`);
+        return response.status;
+    }
 }
 
 export default TripService;
