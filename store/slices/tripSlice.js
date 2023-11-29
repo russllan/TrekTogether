@@ -38,15 +38,18 @@ export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
 
 export const deleteUserTrip = createAsyncThunk(
   "deleteUserTrip",
-  async (userId, tripId) => {
-    const response = await Api.trip.deleteUserTrip(userId, tripId);
+  async (userTrip) => {
+    console.log(userTrip.tripId);
+    const response = await Api.trip.deleteUserTrip(userTrip.id, userTrip.tripId);
     console.log(response);
     return response;
   }
 );
 
 export const deleteTrip = createAsyncThunk("deleteTrip", async (id) => {
+  console.log("Удаление поездки. ID поездки: " + id);
   const response = await Api.trip.deleteTrip(id);
+  console.log(response);
   return response;
 });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,7 @@ import {
 import { GetUserID } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 
-export default function TripCard({ data, isTrip }) {
+export default function TripCard({ data, isTrip, userId }) {
   const navigation = useNavigation();
   const { isDriver } = useSelector((state) => state.trip.AddTrip);
 
@@ -28,9 +28,11 @@ export default function TripCard({ data, isTrip }) {
 
   const onDelete = async () => {
     const id = await GetUserID();
-    isDriver
-      ? dispatch(deleteTrip(data.trip.id))
-      : dispatch(deleteUserTrip(id, data.trip.id));
+    const tripId = data.trip.id;
+
+    id === data.driver.id
+      ? dispatch(deleteTrip(tripId))
+      : dispatch(deleteUserTrip({id, tripId}));
   };
 
   return (
@@ -101,9 +103,16 @@ export default function TripCard({ data, isTrip }) {
               {isTrip ? data.trip.price : data.price} сом
             </Text>
           </View>
+          {console.log(userId)}
           {isTrip ? (
+            
             <TouchableOpacity onPress={onDelete} style={styles.btn}>
-              <Text>Отменить бронь</Text>
+              {userId == data.driver.id ? (
+                <Text>Отменить поездку</Text>
+              ) : (
+                <Text>Отменить бронь</Text>
+              )}
+              
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={onSubmit} style={gStyles.btn}>
