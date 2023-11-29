@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const trip = createAsyncThunk("trip", async (data) => {
   const response = await Api.trip.trip(data);
-  console.log(response);
+  // console.log(response);
   return response;
 });
 
@@ -27,12 +27,26 @@ export const car = createAsyncThunk("car", async (carData) => {
 
 export const bookTrip = createAsyncThunk("book", async (bookData) => {
   const response = await Api.trip.bookTrip(bookData);
-  console.log(response);
+  // console.log(response);
   return response;
 });
 
 export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
   const response = await Api.trip.getTrip(getTripId);
+  return response;
+});
+
+export const deleteUserTrip = createAsyncThunk(
+  "deleteUserTrip",
+  async (userId, tripId) => {
+    const response = await Api.trip.deleteUserTrip(userId, tripId);
+    console.log(response);
+    return response;
+  }
+);
+
+export const deleteTrip = createAsyncThunk("deleteTrip", async (id) => {
+  const response = await Api.trip.deleteTrip(id);
   return response;
 });
 
@@ -46,6 +60,7 @@ const initState = {
     result: [],
     error: false,
     isLoading: true,
+    isDriver: false,
   },
   User: {
     result: [],
@@ -65,8 +80,8 @@ const initState = {
   GetTrip: {
     result: [],
     error: false,
-    isLoading: true
-  }
+    isLoading: true,
+  },
 };
 
 const tripSlice = createSlice({
@@ -90,13 +105,16 @@ const tripSlice = createSlice({
       state.AddTrip.result = action.payload;
       state.AddTrip.error = false;
       state.AddTrip.isLoading = false;
+      state.AddTrip.isAuth = true;
     });
     builder.addCase(addTrip.pending, (state) => {
       state.AddTrip.isLoading = true;
+      state.AddTrip.isAuth = false;
     });
     builder.addCase(addTrip.rejected, (state) => {
       state.AddTrip.error = true;
       state.AddTrip.isLoading = false;
+      state.AddTrip.isAuth = false;
     });
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.User.result = action.payload;
@@ -147,6 +165,7 @@ const tripSlice = createSlice({
       state.GetTrip.error = true;
       state.GetTrip.isLoading = false;
     });
+
   },
 });
 
