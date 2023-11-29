@@ -28,9 +28,17 @@ export default function TripCard({ data, isTrip }) {
 
   const onDelete = async () => {
     const id = await GetUserID();
-    isDriver
-      ? dispatch(deleteTrip(data.trip.id))
-      : dispatch(deleteUserTrip(id, data.trip.id));
+    console.log(data);
+    if (isDriver) {
+      dispatch(deleteTrip(data.trip.id));
+    } else {
+      console.log(isDriver);
+      const dataId = {
+        userId: id,
+        tripId: data.trip.id,
+      };
+      dispatch(deleteUserTrip(dataId));
+    }
   };
 
   return (

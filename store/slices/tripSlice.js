@@ -38,8 +38,8 @@ export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
 
 export const deleteUserTrip = createAsyncThunk(
   "deleteUserTrip",
-  async (userId, tripId) => {
-    const response = await Api.trip.deleteUserTrip(userId, tripId);
+  async (dataId) => {
+    const response = await Api.trip.deleteUserTrip(dataId);
     console.log(response);
     return response;
   }
@@ -105,16 +105,16 @@ const tripSlice = createSlice({
       state.AddTrip.result = action.payload;
       state.AddTrip.error = false;
       state.AddTrip.isLoading = false;
-      state.AddTrip.isAuth = true;
+      state.AddTrip.isDriver = true;
     });
     builder.addCase(addTrip.pending, (state) => {
       state.AddTrip.isLoading = true;
-      state.AddTrip.isAuth = false;
+      state.AddTrip.isDriver = false;
     });
     builder.addCase(addTrip.rejected, (state) => {
       state.AddTrip.error = true;
       state.AddTrip.isLoading = false;
-      state.AddTrip.isAuth = false;
+      state.AddTrip.isDriver = false;
     });
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.User.result = action.payload;
