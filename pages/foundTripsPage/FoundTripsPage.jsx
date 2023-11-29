@@ -3,8 +3,10 @@ import { View, StyleSheet, Text } from "react-native";
 import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
 import { trip } from "../../store/slices/tripSlice";
+import { useState } from "react";
 
 export default function FoundTrips({ route }) {
+  const [userID, setUserID] = useState(0);
   const enteredData = route.params;
   const dispatch = useDispatch();
   const result = useSelector((state) => state.trip.Trip.result);
@@ -21,7 +23,7 @@ export default function FoundTrips({ route }) {
       ) : (
         result?.map((item) => (
           <View>
-            <TripCard isTrip={false} data={item} />
+            <TripCard isTrip={false} data={item} userId={1}/>
           </View>
         ))
       )}
