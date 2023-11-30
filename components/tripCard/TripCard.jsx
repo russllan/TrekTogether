@@ -10,14 +10,14 @@ import {
 import { GetUserID } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 
-export default function TripCard({ data, isTrip, userId }) {
+export default function TripCard({ data, isTrip, userId, updateTripList }) {
   const navigation = useNavigation();
   const { isDriver } = useSelector((state) => state.trip.AddTrip);
 
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
-    const id = await GetUserID();
+    const id = userId;
     const bookData = {
       userId: id,
       tripId: data.id,
@@ -33,6 +33,8 @@ export default function TripCard({ data, isTrip, userId }) {
     id === data.driver.id
       ? dispatch(deleteTrip(tripId))
       : dispatch(deleteUserTrip({id, tripId}));
+    
+    updateTripList();
   };
 
   return (

@@ -37,7 +37,7 @@ export default TripsPage = () => {
   const renderActiveCard = useMemo(
     () =>
       result?.map((item) => {
-        return <TripCard isTrip={true} data={item} userId={userID}/>;
+        return <TripCard isTrip={true} data={item} userId={userID} updateTripList={getMyTrips}/>;
       }),
     [result]
   );
