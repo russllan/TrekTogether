@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { gStyles } from "../../assets/global styles/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,36 +10,34 @@ import {
 import { GetUserID } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 
-export default function TripCard({ data, isTrip }) {
+export default function TripCard({ data, isTrip, userId }) {
   const navigation = useNavigation();
-  const { isDriver } = useSelector((state) => state.trip.AddTrip);
 
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
-    const id = await GetUserID();
-    const bookData = {
-      userId: id,
-      tripId: data.id,
-    };
-    await dispatch(bookTrip(bookData));
-    navigation.navigate("Main");
-  };
-
-  const onDelete = async () => {
-    const id = await GetUserID();
-    console.log(data);
-    if (isDriver) {
-      dispatch(deleteTrip(data.trip.id));
+    // const id = await GetUserID();
+    if (isTrip) {
+      userId === data.driver.id
+        ? dispatch(deleteTrip(data.trip.id))
+        : dispatch(deleteUserTrip({ userId, tripId }));
     } else {
-      console.log(isDriver);
-      const dataId = {
-        userId: id,
-        tripId: data.trip.id,
+      const bookData = {
+        userId: userId,
+        tripId: data.id,
       };
-      dispatch(deleteUserTrip(dataId));
+      await dispatch(bookTrip(bookData));
+      navigation.navigate("Main");
     }
   };
+
+  // const onDelete = async () => {
+  //   // const id = await GetUserID();
+
+  //   userId === data.driver.id
+  //     ? dispatch(deleteTrip(data.trip.id))
+  //     : dispatch(deleteUserTrip({id, tripId}));
+  // };
 
   return (
     <View style={styles.viewTrip}>
@@ -109,9 +107,14 @@ export default function TripCard({ data, isTrip }) {
               {isTrip ? data.trip.price : data.price} сом
             </Text>
           </View>
+          {console.log(userId)}
           {isTrip ? (
-            <TouchableOpacity onPress={onDelete} style={styles.btn}>
-              <Text>Отменить бронь</Text>
+            <TouchableOpacity onPress={onSubmit} style={styles.btn}>
+              {userId == data.driver.id ? (
+                <Text>Отменить поездку</Text>
+              ) : (
+                <Text>Отменить бронь</Text>
+              )}
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={onSubmit} style={gStyles.btn}>

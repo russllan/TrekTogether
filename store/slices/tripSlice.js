@@ -38,15 +38,17 @@ export const getTrip = createAsyncThunk("getTrip", async (getTripId) => {
 
 export const deleteUserTrip = createAsyncThunk(
   "deleteUserTrip",
-  async (dataId) => {
-    const response = await Api.trip.deleteUserTrip(dataId);
+  async (userTrip) => {
+    const response = await Api.trip.deleteUserTrip(userTrip);
     console.log(response);
     return response;
   }
 );
 
 export const deleteTrip = createAsyncThunk("deleteTrip", async (id) => {
+  console.log("Удаление поездки. ID поездки: " + id);
   const response = await Api.trip.deleteTrip(id);
+  console.log(response);
   return response;
 });
 
@@ -60,7 +62,6 @@ const initState = {
     result: [],
     error: false,
     isLoading: true,
-    isDriver: false,
   },
   User: {
     result: [],
@@ -165,7 +166,6 @@ const tripSlice = createSlice({
       state.GetTrip.error = true;
       state.GetTrip.isLoading = false;
     });
-
   },
 });
 

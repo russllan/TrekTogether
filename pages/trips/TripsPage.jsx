@@ -16,6 +16,7 @@ import { gStyles } from "../../assets/global styles/styles";
 
 export default TripsPage = () => {
   const [active, setActive] = useState(true);
+  const [userID, setUserID] = useState();
 
   const dispatch = useDispatch();
 
@@ -23,7 +24,9 @@ export default TripsPage = () => {
   const isLoading = useSelector((state) => state.trip.GetTrip.isLoading);
 
   const getMyTrips = async () => {
+
     const res = await GetUserID();
+    setUserID(res);
     dispatch(getTrip(res));
   };
 
@@ -34,7 +37,7 @@ export default TripsPage = () => {
   const renderActiveCard = useMemo(
     () =>
       result?.map((item) => {
-        return <TripCard isTrip={true} data={item} />;
+        return <TripCard isTrip={true} data={item} userId={userID}/>;
       }),
     [result]
   );
