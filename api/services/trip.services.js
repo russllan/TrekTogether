@@ -34,6 +34,10 @@ class TripService {
         const response = await http.delete(`Trip/deleteTrip/${id}`);
         return response.status;
     }
+    async completeTrip(id) {
+        const response = await http.post(`Trip/completeTrip/${id}`);
+        return response.data;
+    }
 }
 
 export default TripService;

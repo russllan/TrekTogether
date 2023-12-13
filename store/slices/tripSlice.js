@@ -53,6 +53,12 @@ export const deleteTrip = createAsyncThunk("deleteTrip", async (id) => {
   return response;
 });
 
+export const completeTrip = createAsyncThunk("completeTrip", async (id) => {
+  const response = await Api.trip.completeTrip(id);
+  console.log(response);
+  return response;
+})
+
 const initState = {
   Trip: {
     result: [],
@@ -85,6 +91,11 @@ const initState = {
     error: false,
     isLoading: true,
   },
+  completeTrip: {
+    id: [],
+    isLoading: false,
+    isError: true
+  }
 };
 
 const tripSlice = createSlice({
@@ -108,16 +119,16 @@ const tripSlice = createSlice({
       state.AddTrip.result = action.payload;
       state.AddTrip.error = false;
       state.AddTrip.isLoading = false;
-      state.AddTrip.isAuth = true;
+      state.AddTrip.isDriver = true;
     });
     builder.addCase(addTrip.pending, (state) => {
       state.AddTrip.isLoading = true;
-      state.AddTrip.isAuth = false;
+      state.AddTrip.isDriver = false;
     });
     builder.addCase(addTrip.rejected, (state) => {
-      state.AddTrip.error = true;
+      state.AddTrip.error = true; 
       state.AddTrip.isLoading = false;
-      state.AddTrip.isAuth = false;
+      state.AddTrip.isDriver = false;
     });
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.User.result = action.payload;
@@ -168,6 +179,20 @@ const tripSlice = createSlice({
       state.GetTrip.error = true;
       state.GetTrip.isLoading = false;
     });
+
+    builder.addCase(completeTrip.fulfilled, (state, action) => {
+      state.completeTrip.id = action.payload;
+      state.completeTrip.isError = false;
+      state.completeTrip.isLoading = false;
+    })
+    builder.addCase(completeTrip.pending, (state) => {
+      state.completeTrip.isError = true;
+      state.completeTrip.isLoading = true;
+    })
+    builder.addCase(completeTrip.rejected, (state) => {
+      state.completeTrip.isError = true;
+      state.completeTrip.isLoading = false;
+    })
 
   },
 });
