@@ -22,9 +22,9 @@ export default TripsPage = () => {
 
   const result = useSelector((state) => state.trip.GetTrip.result);
   const isLoading = useSelector((state) => state.trip.GetTrip.isLoading);
+  const idArchive = useSelector((state) => state.trip.completeTrip.id);
 
   const getMyTrips = async () => {
-
     const res = await GetUserID();
     setUserID(res);
     dispatch(getTrip(res));
@@ -36,11 +36,28 @@ export default TripsPage = () => {
 
   const renderActiveCard = useMemo(
     () =>
-      result?.map((item) => {
-        return <TripCard isTrip={true} data={item} userId={userID}/>;
-      }),
+      result
+        ?.filter((item) => item.trip.isCompleted === false)
+        .map((item) => {
+          return (
+            <TripCard
+              key={item.id}
+              isTrip={true}
+              data={item}
+              userId={userID}
+            />
+          );
+        }),
     [result]
   );
+
+  const renderIdArchive = useMemo(() => {
+    return result
+      ?.filter((item) => item.trip.isCompleted === true)
+      .map((item) => (
+        <TripCard key={item.id} isTrip={true} data={item} userId={userID} />
+      ));
+  }, [result]);
 
   if (isLoading)
     return (
@@ -64,9 +81,7 @@ export default TripsPage = () => {
         <Text style={styles.text}>Архив</Text>
       </TouchableOpacity>
       <View style={styles.wrapperAbense}>
-        <View
-          style={{ width: "100%", alignItems: "center" }}
-        >
+        <View style={{ width: "100%", alignItems: "center" }}>
           <TouchableOpacity style={gStyles.btn} onPress={() => getMyTrips()}>
             <Text>Обновить</Text>
           </TouchableOpacity>
@@ -83,7 +98,11 @@ export default TripsPage = () => {
           </ScrollView>
         ) : (
           <View style={styles.abense}>
-            <Absence title={"Вы ещё не совершали поездки в нашем сервисе"} />
+            {idArchive ? (
+              renderIdArchive
+            ) : (
+              <Absence title={"Вы ещё не совершали поездки в нашем сервисе"} />
+            )}
           </View>
         )}
       </View>
