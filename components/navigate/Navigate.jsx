@@ -16,6 +16,7 @@ import RegisterPage from "../../pages/register/RegisterPage";
 import AuthPage from "../../pages/authPage/AuthPage";
 import DriverFilling from "../../pages/driverFilling/DriverFilling";
 import CreatePage from "../../pages/CreatePage/CreatePage";
+import ProfilePage from "../../pages/profilePage/ProfilePage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,7 +46,7 @@ const TabNavigate = () => {
       <Tab.Screen name="Поиск" component={MainPage} />
       <Tab.Screen name="Создать" component={CreatePage} />
       <Tab.Screen name="Уведомления" component={SearchPage} />
-      <Tab.Screen name="Профиль" component={SearchPage} />
+      <Tab.Screen name="Профиль" component={ProfilePage} />
     </Tab.Navigator>
   );
 };
