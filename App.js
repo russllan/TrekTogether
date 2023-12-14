@@ -8,8 +8,21 @@ export const GetUserID = async () => {
     const value = await AsyncStorage.getItem("user");
     if (value !== null) {
       const userData = JSON.parse(value);
-      console.log(userData);
+      // console.log(userData);
       return userData.id;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+export const GetUserData = async () => {
+  try { 
+    const value = await AsyncStorage.getItem("user");
+    if (value !== null) {
+      const userData = JSON.parse(value);
+      console.log(userData);
+      return userData;
     }
   } catch (error) {
     return null;
