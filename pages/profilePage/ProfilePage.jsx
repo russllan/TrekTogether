@@ -18,6 +18,8 @@ export default MainPage = () => {
 
   useEffect(() => {
     getData();
+    setActive(false);
+    setActiveComment(false);
   }, []);
 
   console.log(result);

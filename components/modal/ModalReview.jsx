@@ -52,50 +52,72 @@ export default function ModalReview({ open, setOpen, userId, driverId }) {
   return (
     <View style={styles.FormReview}>
       <Modal
+        style={styleGlobal}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        {/* <Box sx={styleGlobal}> */}
-        <View>
-          <Text style={{ paddingRight: 30 }}>Рейтинг:</Text>
-          <TextInput
-            keyboardType="numeric"
-            maxLength={5}
-            onChangeText={(e) => handleRatingChange(e)}
-          />
+        <View style={styles.wrapper}>
+          <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
+            <Text style={{ textAlign: "center", fontSize: 18 }}>Рейтинг:</Text>
+            <TextInput
+              keyboardType="numeric"
+              maxLength={5}
+              placeholder="Введите рейтинг"
+              style={styles.inputRating}
+              onChangeText={(e) => handleRatingChange(e)}
+            />
+          </View>
+          <View style={{ marginTop: 30 }}>
+            <TextInput
+              placeholder="Введите отзыв *необязательное поле"
+              style={styles.inputReview}
+              onChangeText={(e) => setComment(e)}
+            />
+          </View>
+          <View>
+            <TouchableOpacity style={styles.btn} onPress={onSubmit}>
+              <Text>Оставить отзыв</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{ marginTop: 30 }}>
-          <TextInput
-            placeholder="Введите отзыв *необязательное поле"
-            style={styles.inputReview}
-            onChangeText={(e) => setComment(e)}
-          />
-        </View>
-        <View>
-          <TouchableOpacity style={styles.btn} onPress={onSubmit}>
-            <Text>Оставить отзыв</Text>
-          </TouchableOpacity>
-        </View>
-        {/* </Box> */}
       </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  FormReview: {},
+  FormReview: {
+    width: 400,
+    height: 400,
+  },
+  wrapper: {
+    width: "100%",
+    height: "100%",
+    marginTop: 60,
+    padding: 35,
+  },
   btn: {
-    padding: "10 30",
-    backgroundColor: "#fa4c43",
+    padding: 15,
+    backgroundColor: "green",
     color: "white",
-    marginTop: "30",
+    marginTop: 30,
+    borderRadius: 10,
   },
   inputReview: {
-    width: 300,
-    border: "1px solid silver",
-    padding: "8 20",
+    borderWidth: 1,
+    borderColor: "silver",
+    padding: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  inputRating: {
+    width: 160,
+    borderWidth: 1,
+    borderColor: "silver",
+    padding: 15,
+    paddingHorizontal: 20,
     borderRadius: 10,
   },
 });

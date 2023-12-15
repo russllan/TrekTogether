@@ -79,12 +79,9 @@ export default function TripCard({ data, isTrip, userId }) {
         <View style={styles.viewLeft}>
           <View style={styles.viewTop}>
             <Text>{isTrip ? data.trip.departureData : data.departureData}</Text>
-            {/* <Text>{props.time}</Text> */}
             <Text>{isTrip ? data.trip.departureCity : data.departureCity}</Text>
           </View>
           <View style={styles.viewBottom}>
-            {/* <Text>{props.arrivalDate}</Text> */}
-            {/* <Text>{props.timeArrival}</Text> */}
             <Text>{isTrip ? data.trip.arrivalCity : data.arrivalCity}</Text>
             {isCompleteTrip ? null : (
               <TouchableOpacity onPress={reviewChange}>
@@ -94,18 +91,12 @@ export default function TripCard({ data, isTrip, userId }) {
                 />
               </TouchableOpacity>
             )}
-            {open ? <ModalReview open={open} setOpen={setOpen} userId={userId} driverId={data.driver.id} /> : null}
+            {open ? <View style={styles.modalReview}><ModalReview open={open} setOpen={setOpen} userId={userId} driverId={data.driver.id} /></View> : null}
           </View>
         </View>
         <View style={styles.viewRight}>
           <View style={styles.viewRightTop}>
             <View style={{ flexDirection: "row" }}>
-              {/* <Image
-                  source={{ uri: data.driverImg }}
-                  width={45}
-                  height={45}
-                  borderRadius={30}
-                /> */}
               <Text
                 style={{
                   width: 75,
@@ -117,12 +108,6 @@ export default function TripCard({ data, isTrip, userId }) {
               </Text>
             </View>
             <View style={{ flexDirection: "row", padding: 7 }}>
-              {/* <Image
-                  source={{ uri: props.carImg }}
-                  width={45}
-                  height={45}
-                  borderRadius={30}
-                /> */}
                 <Text>awd</Text>
               <Text
                 style={{
@@ -232,5 +217,8 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     backgroundColor: "#8B0000",
+  },
+  modalReview: {
+    flex: 1
   },
 });
