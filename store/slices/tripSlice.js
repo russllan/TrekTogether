@@ -184,6 +184,7 @@ const tripSlice = createSlice({
       state.completeTrip.id = action.payload;
       state.completeTrip.isError = false;
       state.completeTrip.isLoading = false;
+      state.AddTrip.isDriver = false;
     })
     builder.addCase(completeTrip.pending, (state) => {
       state.completeTrip.isError = true;

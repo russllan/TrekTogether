@@ -5,7 +5,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons, Entypo } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  Entypo,
+  AntDesign,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 
 import LandingPage from "../../pages/LandingPage";
 import MainPage from "../../pages/mainPage/MainPage";
@@ -36,6 +41,12 @@ const TabNavigate = () => {
           } else if (route.name === "Создать") {
             iconName = "create";
             return <Entypo name="plus" size={24} color="black" />;
+          } else if (route.name === "Профиль") {
+            iconName = "profile";
+            return <AntDesign name="user" size={24} color="black" />;
+          } else if (route.name === "Уведомления") {
+            iconName = "notification";
+            return <SimpleLineIcons name="bell" size={24} color="black" />;
           }
           // Возвращаем иконку Ionicons
           return <Ionicons name={iconName} size={size} color={color} />;
