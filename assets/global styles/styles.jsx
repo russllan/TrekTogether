@@ -14,25 +14,41 @@ export const gStyles = StyleSheet.create({
     fontSize: 100,
   },
   wrapperText: {
-    width: 394,
+    fontSize: 18,
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
     gap: 7,
   },
   text: {
-    width: 300,
+    width: "100%",
     fontFamily: "Roboto",
-    textAlign: "center"
+    color: "#ffff",
+    textAlign: "center",
+  },
+  textOpacity: {
+    fontSize: 13,
+    opacity: 0.5,
+    color: "#01010180",
+  },
+  h1: {
+    fontSize: 32,
   },
   textInput: {
-    backgroundColor: "#d9d9d9",
-    padding: 12,
-    borderRadius: 7,
+    padding: 10,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderBlockColor: "1px solid #00000080",
   },
   btn: {
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: "#13f043",
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "#3B4340",
+  },
+  btnRed: {
+    width: 300,
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "#96273B",
   },
 });

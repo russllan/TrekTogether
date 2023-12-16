@@ -83,7 +83,7 @@ export default TripsPage = () => {
       <View style={styles.wrapperAbense}>
         <View style={{ width: "100%", alignItems: "center" }}>
           <TouchableOpacity style={gStyles.btn} onPress={() => getMyTrips()}>
-            <Text>Обновить</Text>
+            <Text style={gStyles.text}>Обновить</Text>
           </TouchableOpacity>
         </View>
         {active ? (

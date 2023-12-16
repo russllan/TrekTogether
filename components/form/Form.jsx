@@ -30,68 +30,70 @@ export default Form = () => {
 
   return (
     <View style={styles.form}>
-      <View style={styles.inputs}>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(e) => setDestination(e)}
-          placeholder="Откуда"
-        />
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(e) => setArrival(e)}
-          placeholder="Куда"
-        />
-      </View>
-      <View style={styles.date}>
-        <TouchableOpacity
-          onPress={() => setActive(!active)}
-          style={styles.textInput}
-        >
-          <Text style={{ color: "#242424" }}>
-            {selected === "" ? `Сегодня` : selected}
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.quantity}>
+      <View style={styles.container}>
+        <View style={styles.inputs}>
+          <TextInput
+            style={gStyles.textInput}
+            onChangeText={(e) => setDestination(e)}
+            placeholder="Откуда"
+          />
+          <TextInput
+            style={gStyles.textInput}
+            onChangeText={(e) => setArrival(e)}
+            placeholder="Куда"
+          />
+        </View>
+        <View style={styles.date}>
           <TouchableOpacity
-            style={styles.operation}
-            onPress={() => (amount === 1 ? 1 : setAmount(amount - 1))}
+            onPress={() => setActive(!active)}
+            style={gStyles.textInput}
           >
-            <Text style={{ color: "silver" }}>—</Text>
+            <Text style={{ color: "#242424" }}>
+              {selected === "" ? `Сегодня` : selected}
+            </Text>
           </TouchableOpacity>
-          <View>
-            <Text>{amount}</Text>
+          <View style={styles.quantity}>
+            <TouchableOpacity
+              style={styles.operation}
+              onPress={() => (amount === 1 ? 1 : setAmount(amount - 1))}
+            >
+              <Text style={{ color: "silver" }}>—</Text>
+            </TouchableOpacity>
+            <View>
+              <Text>{amount}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.operation}
+              onPress={() => setAmount(amount + 1)}
+            >
+              <Text style={{ color: "#13f043", fontSize: 15 }}>+</Text>
+            </TouchableOpacity>
           </View>
+          <Modal isVisible={active}>
+            <Calendar
+              onDayPress={(day) => {
+                setSelected(day.dateString);
+                setActive(!active);
+              }}
+              markedDates={{
+                [selected]: {
+                  selected: true,
+                  disableTouchEvent: true,
+                  selectedDotColor: "orange",
+                },
+              }}
+            />
+          </Modal>
+        </View>
+        <View style={styles.text}></View>
+        <View style={styles.btnView}>
           <TouchableOpacity
-            style={styles.operation}
-            onPress={() => setAmount(amount + 1)}
+            style={gStyles.btn}
+            onPress={() => navigation.navigate("FoundTrips", enteredData)}
           >
-            <Text style={{ color: "#13f043", fontSize: 15 }}>+</Text>
+            <Text style={{ color: "#fff", textAlign: "center" }}>Поехали</Text>
           </TouchableOpacity>
         </View>
-        <Modal isVisible={active}>
-          <Calendar
-            onDayPress={(day) => {
-              setSelected(day.dateString);
-              setActive(!active);
-            }}
-            markedDates={{
-              [selected]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedDotColor: "orange",
-              },
-            }}
-          />
-        </Modal>
-      </View>
-      <View style={styles.text}></View>
-      <View style={styles.btnView}>
-        <TouchableOpacity
-          style={gStyles.btn}
-          onPress={() => navigation.navigate("FoundTrips", enteredData)}
-        >
-          <Text style={{ color: "#fff", textAlign: "center" }}>Поехали</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -102,13 +104,12 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
   },
+  container: {
+    width: "97%",
+    padding: 10,
+  },
   inputs: {
     gap: 12,
-  },
-  textInput: {
-    backgroundColor: "#d9d9d9",
-    padding: 12,
-    borderRadius: 7,
   },
   date: {
     width: "100%",

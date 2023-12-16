@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/authSlice";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { gStyles } from "../../assets/global styles/styles";
 
 export default function AuthPage() {
   const [userLogin, setLogin] = useState("");
@@ -65,25 +66,28 @@ export default function AuthPage() {
   return (
     <View style={styles.viewAuth}>
       <View style={styles.viewWrapper}>
-        <Text style={{ textAlign: "center" }}>Авторизация</Text>
+        <Text style={gStyles.h1}>Аутентификация</Text>
+        <Text style={{ paddingBottom: 30 }}>Войдите в свой аккаунт</Text>
         <TextInput
-          style={styles.textInput}
+          style={gStyles.textInput}
           onChangeText={(e) => setLogin(e)}
           placeholder="Введите логин"
         />
         <TextInput
-          style={styles.textInput}
+          style={gStyles.textInput}
           onChangeText={(e) => setPassword(e)}
           placeholder="Введите пароль"
         />
-        <TouchableOpacity onPress={onSubmit} style={styles.btn}>
-          <Text style={{ textAlign: "center" }}>Войти</Text>
+        <TouchableOpacity onPress={onSubmit} style={gStyles.btn}>
+          <Text style={gStyles.text}>Войти</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.viewRegister}>
+        <Text style={{textAlign: "center", paddingBottom: 10}}>Нет аккаунта?</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("Register")}
-          style={styles.btn}
         >
-          <Text style={{ textAlign: "center" }}>Пройти регистрацию</Text>
+          <Text style={styles.text}>Зарегистрируйся прямо сейчас!</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -96,17 +100,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  viewWrapper: { gap: 15 },
-  textInput: {
-    backgroundColor: "#d9d9d9",
-    padding: 15,
-    paddingLeft: 80,
-    paddingRight: 80,
-    borderRadius: 7,
+  viewWrapper: {
+    width: "80%",
+    gap: 20,
+    paddingBottom: 40,
   },
-  btn: {
-    backgroundColor: "green",
-    padding: 15,
-    borderRadius: 10,
+  text: {
+    color: "#004F39",
+    borderBottomWidth: 1,
+    borderBottomColor: '#004F39',
+    marginBottom: 5,
   },
 });

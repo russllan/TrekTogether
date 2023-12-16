@@ -22,6 +22,7 @@ import AuthPage from "../../pages/authPage/AuthPage";
 import DriverFilling from "../../pages/driverFilling/DriverFilling";
 import CreatePage from "../../pages/CreatePage/CreatePage";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
+import ReviewPage from "../../pages/reviewPage/ReviewPage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,10 +87,10 @@ export default Navigate = () => {
             headerShown: true,
           })}
         />
-        {/* <Stack.Screen name="book" component={} options={({route}) => ({
+        <Stack.Screen name="Review" component={ReviewPage} options={({route}) => ({
           data: route.params.data,
           headerShown: true
-        })} /> */}
+        })} />
       </Stack.Navigator>
     </NavigationContainer>
   );
