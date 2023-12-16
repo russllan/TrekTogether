@@ -78,6 +78,7 @@ export default function TripCard({ data, isTrip, userId }) {
       <View style={styles.viewWrapper}>
         <View style={styles.viewLeft}>
           <View style={styles.viewTop}>
+            <Text style={gStyles.textOpacity}>Точка старта:</Text>
             <Text>{isTrip ? data.trip.departureData : data.departureData}</Text>
             <Text>{isTrip ? data.trip.departureCity : data.departureCity}</Text>
           </View>

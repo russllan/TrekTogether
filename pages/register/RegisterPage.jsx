@@ -5,11 +5,11 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ImageBackground,
-  Alert
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../store/slices/authSlice";
+import { gStyles } from "../../assets/global styles/styles";
 
 export default function RegisterPage({ navigation }) {
   const [username, setUsername] = useState("");
@@ -35,11 +35,11 @@ export default function RegisterPage({ navigation }) {
           if (error !== false) {
             dispatch(register(data));
             Alert.alert(
-              'message',
-              'Вы зарегистрированы',
+              "message",
+              "Вы зарегистрированы",
               [
                 {
-                  text: 'ОК',
+                  text: "ОК",
                 },
               ],
               { cancelable: false }
@@ -54,38 +54,34 @@ export default function RegisterPage({ navigation }) {
   };
 
   return (
-    <ImageBackground
-      source={{
-        uri: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ2lufGVufDB8fDB8fHww&w=720",
-      }}
-      style={{ flex: 1, resizeMode: "cover" }}
-    >
-      <View style={styles.viewRegister}>
-        <View style={{ flexDirection: "column", gap: 15 }}>
-          <Text style={styles.title}>Регистрация</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(e) => setUsername(e)}
-            placeholder="Введите ваше имя"
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(e) => setPhone(e)}
-            placeholder="Введите ваш номер телефона"
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(e) => setPassword(e)}
-            placeholder="Введите пароль"
-            secureTextEntry={true}
-          />
-          <TouchableOpacity style={styles.btn} onPress={onSubmit}>
-            <Text style={{ textAlign: "center" }}>Зарегистрироваться</Text>
+    <View style={styles.viewRegister}>
+      <View style={{ flexDirection: "column", gap: 20, width: "80%", height: "50%", justifyContent: "space-evenly" }}>
+        <Text style={gStyles.h1}>Регистрация</Text>
+        <Text style={{ paddingBottom: 30 }}>Регистрация</Text>
+        <TextInput
+          style={gStyles.textInput}
+          onChangeText={(e) => setUsername(e)}
+          placeholder="Введите ваше имя"
+        />
+        <TextInput
+          style={gStyles.textInput}
+          onChangeText={(e) => setPhone(e)}
+          placeholder="Введите ваш номер телефона"
+        />
+        <TextInput
+          style={gStyles.textInput}
+          onChangeText={(e) => setPassword(e)}
+          placeholder="Введите пароль"
+          secureTextEntry={true}
+        />
+        <View style={{ marginTop: 30 }}>
+          <TouchableOpacity style={gStyles.btn} onPress={onSubmit}>
+            <Text style={gStyles.text}>Зарегистрироваться</Text>
           </TouchableOpacity>
           {error ? <Text>error synacsis</Text> : null}
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -94,18 +90,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  textInput: {
-    backgroundColor: "#d9d9d9",
-    padding: 15,
-    paddingLeft: 50,
-    paddingRight: 50,
-    borderRadius: 7,
-  },
-  title: {
-    fontSize: 20,
-    textAlign: "center",
-    paddingBottom: 20,
   },
   btn: {
     backgroundColor: "green",

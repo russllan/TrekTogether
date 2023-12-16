@@ -192,7 +192,7 @@ export default CreatePage = () => {
         </View>
         <View style={styles.viewBtn}>
           <TouchableOpacity style={gStyles.btn} onPress={onSubmit}>
-            <Text style={{ textAlign: "center" }}>Создать</Text>
+            <Text style={gStyles.text}>Создать</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -204,15 +204,12 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 10,
   },
   wrapperView: {
-    width: "90%",
-    padding: 30,
-    gap: 22,
-    borderWidth: 2,
-    borderRadius: 15,
-    borderColor: "white",
+    width: "96%",
+    padding: 15,
+    gap: 20,
   },
   select: {
     backgroundColor: "#d9d9d9",
@@ -222,12 +219,6 @@ const styles = StyleSheet.create({
   viewOptions: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  viewBtn: {},
-  btn: {
-    padding: 20,
-    borderRadius: 7,
-    backgroundColor: "black",
   },
   quantity: {
     flexDirection: "row",
