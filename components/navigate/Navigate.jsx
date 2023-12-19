@@ -15,7 +15,6 @@ import {
 import LandingPage from "../../pages/LandingPage";
 import MainPage from "../../pages/mainPage/MainPage";
 import TripsPage from "../../pages/trips/TripsPage";
-import SearchPage from "../../pages/CreatePage/CreatePage";
 import FoundTrips from "../../pages/foundTripsPage/FoundTripsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import AuthPage from "../../pages/authPage/AuthPage";
@@ -23,6 +22,7 @@ import DriverFilling from "../../pages/driverFilling/DriverFilling";
 import CreatePage from "../../pages/CreatePage/CreatePage";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
 import ReviewPage from "../../pages/reviewPage/ReviewPage";
+import DetailPage from "../../pages/detail/DetailPage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,7 +57,6 @@ const TabNavigate = () => {
       <Tab.Screen name="Поездки" component={TripsPage} />
       <Tab.Screen name="Поиск" component={MainPage} />
       <Tab.Screen name="Создать" component={CreatePage} />
-      <Tab.Screen name="Уведомления" component={SearchPage} />
       <Tab.Screen name="Профиль" component={ProfilePage} />
     </Tab.Navigator>
   );
@@ -88,6 +87,10 @@ export default Navigate = () => {
           })}
         />
         <Stack.Screen name="Review" component={ReviewPage} options={({route}) => ({
+          data: route.params.data,
+          headerShown: true
+        })} />
+        <Stack.Screen name="Detail" component={DetailPage} options={({route}) => ({
           data: route.params.data,
           headerShown: true
         })} />

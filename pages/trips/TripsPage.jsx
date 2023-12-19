@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from "react-native";
 import { useMemo, useState, useEffect } from "react";
@@ -40,12 +39,14 @@ export default TripsPage = () => {
         ?.filter((item) => item.trip.isCompleted === false)
         .map((item) => {
           return (
-            <TripCard
-              key={item.id}
-              isTrip={true}
-              data={item}
-              userId={userID}
-            />
+            <View style={styles.viewCard}>
+              <TripCard
+                key={item.id}
+                isTrip={true}
+                data={item}
+                userId={userID}
+              />
+            </View>
           );
         }),
     [result]
@@ -55,7 +56,9 @@ export default TripsPage = () => {
     return result
       ?.filter((item) => item.trip.isCompleted === true)
       .map((item) => (
-        <TripCard key={item.id} isTrip={true} data={item} userId={userID} />
+        <View style={styles.viewCard}>
+          <TripCard key={item.id} isTrip={true} data={item} userId={userID} />
+        </View>
       ));
   }, [result]);
 
@@ -81,30 +84,28 @@ export default TripsPage = () => {
         <Text style={styles.text}>Архив</Text>
       </TouchableOpacity>
       <View style={styles.wrapperAbense}>
-        <View style={{ width: "100%", alignItems: "center" }}>
+        <View
+          style={{ width: "100%", alignItems: "center", paddingBottom: 15 }}
+        >
           <TouchableOpacity style={gStyles.btn} onPress={() => getMyTrips()}>
             <Text style={gStyles.text}>Обновить</Text>
           </TouchableOpacity>
         </View>
-        {active ? (
+        <View style={styles.abense}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <View style={styles.abense}>
-              {result ? (
+            {active ? (
+              result ? (
                 renderActiveCard
               ) : (
                 <Absence title={"У вас нет активных поездок"} />
-              )}
-            </View>
-          </ScrollView>
-        ) : (
-          <View style={styles.abense}>
-            {idArchive ? (
+              )
+            ) : idArchive ? (
               renderIdArchive
             ) : (
               <Absence title={"Вы ещё не совершали поездки в нашем сервисе"} />
             )}
-          </View>
-        )}
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -112,22 +113,18 @@ export default TripsPage = () => {
 
 const styles = StyleSheet.create({
   trip: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
   active: {
     width: "50%",
-    height: "100%",
   },
   arhiv: {
     width: "50%",
-    height: "100%",
   },
   activeTrip: {
     width: "50%",
-    height: "100%",
     borderBottomWidth: 1,
     borderBottomColor: "green",
   },
@@ -138,15 +135,22 @@ const styles = StyleSheet.create({
   wrapperAbense: {
     width: "100%",
     position: "absolute",
-    top: 100,
+    top: 60,
   },
   abense: {
     width: "100%",
+    height: 600,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 25,
   },
   scrollViewContent: {
     paddingVertical: 20,
     paddingHorizontal: 10,
+  },
+  viewCard: {
+    width: "100%",
+    height: 240,
+    alignItems: "center",
   },
 });
