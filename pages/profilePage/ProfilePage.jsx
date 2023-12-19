@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { GetUserData } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../store/slices/reviewSlice";
 import { gStyles } from "../../assets/global styles/styles";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default MainPage = () => {
   const [user, setUser] = useState();
@@ -44,20 +44,19 @@ export default MainPage = () => {
   };
 
   const logout = () => {
-    AsyncStorage
-      .removeItem("user")
+    AsyncStorage.removeItem("user")
       .then(() => console.log("User has logged out"))
       .catch((error) => console.error("Error removing user data: ", error));
-      navigation.navigate("Auth");
+    navigation.navigate("Auth");
   };
 
-  const renderReviews = result.map((innerArray, outerIndex) => (
-    <View key={outerIndex}>
-      {innerArray.map((item) => (
-        <Text key={item.id}>Отзывы: {item.comment}</Text>
-      ))}
-    </View>
-  ));
+  const renderReviews = () => {
+    result?.map((item) => (
+      <View key={item.id}>
+        <Text>Отзывы: {item.comment}</Text>
+      </View>
+    ));
+  };
 
   return (
     <View style={styles.main}>
@@ -73,13 +72,11 @@ export default MainPage = () => {
         </View>
         <View>
           {active ? (
-            result.map((innerArray, outerIndex) => (
-              <View style={styles.viewRating} key={outerIndex}>
-                {innerArray.map((item) => (
-                  <Text key={item.id}>Рейтинг: {item.rating} / 5</Text>
-                ))}
-              </View>
-            ))
+            <Text>
+              Средний рейтинг:{" "}
+              {result.length > 0 ? result?.reduce((acc, item) => acc + item.rating, 0) /
+                result.length : "У вас еще нет отзывов"}
+            </Text>
           ) : (
             <TouchableOpacity onPress={getRating}>
               <Text>Показать рейтинг</Text>
