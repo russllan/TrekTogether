@@ -65,7 +65,7 @@ export default function DriverFilling({ route }) {
   return (
     <View style={styles.viewMain}>
       <View style={styles.viewWrapper}>
-        <Text style={gStyles.text}>Какой у вас Автомобиль?</Text>
+        <Text style={gStyles.h2}>Какой у вас Автомобиль?</Text>
         <View style={styles.inputs}>
           <TextInput
             onChangeText={(e) => setMark(e)}

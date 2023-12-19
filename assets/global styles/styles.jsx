@@ -34,6 +34,9 @@ export const gStyles = StyleSheet.create({
   h1: {
     fontSize: 32,
   },
+  h2: {
+    fontSize: 16,
+  },
   textInput: {
     padding: 10,
     borderRadius: 3,
@@ -44,6 +47,12 @@ export const gStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     backgroundColor: "#3B4340",
+  },
+  btnGreen: {
+    width: 300,
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "#004F39",
   },
   btnRed: {
     width: 300,

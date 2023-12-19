@@ -4,9 +4,10 @@ import TripCard from "../../components/tripCard/TripCard";
 import { useDispatch, useSelector } from "react-redux";
 import { trip } from "../../store/slices/tripSlice";
 import { useState } from "react";
+import { GetUserID } from "../../App";
 
 export default function FoundTrips({ route }) {
-  const [userID, setUserID] = useState(0);
+  const [userID, setUserID] = useState();
   const enteredData = route.params;
   const dispatch = useDispatch();
   const result = useSelector((state) => state.trip.Trip.result);
@@ -14,6 +15,15 @@ export default function FoundTrips({ route }) {
 
   useEffect(() => {
     dispatch(trip(enteredData));
+    const fetchData = async () => {
+      try {
+        const id = await GetUserID();
+        setUserID(id);
+        dispatch(trip(enteredData));
+      } catch (error) {
+      }
+    }
+    fetchData();
   }, []);
 
   return (
@@ -23,7 +33,7 @@ export default function FoundTrips({ route }) {
       ) : (
         result?.map((item) => (
           <View>
-            <TripCard isTrip={false} data={item} userId={1}/>
+            <TripCard isTrip={false} data={item} userId={userID} />
           </View>
         ))
       )}
