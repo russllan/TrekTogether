@@ -7,6 +7,7 @@ import {
   Alert,
   Image,
 } from "react-native";
+import Modal from "react-native-modal";
 import { useDispatch } from "react-redux";
 import { gStyles } from "../../assets/global styles/styles";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ import {
   deleteTrip,
   deleteUserTrip,
 } from "../../store/slices/tripSlice";
+import ModalReview from "../../components/modal/ModalReview";
 
 export default DetailPage = ({ route }) => {
   const { data } = route.params;
@@ -79,10 +81,9 @@ export default DetailPage = ({ route }) => {
     );
   };
 
-  // const reviewChange = () => {
-  //   console.log(data.driver.id);
-  //   setOpen(!open);
-  // };
+  const reviewChange = () => {
+    setOpen(!open);
+  };
 
   return (
     <View style={styles.DetailPage}>
@@ -160,12 +161,27 @@ export default DetailPage = ({ route }) => {
               </View>
             </View>
           </View>
+          {open ? (
+            <>
+              <Modal
+                isVisible={open}
+                style={styles.modal}
+                backdropOpacity={0.5}
+              ></Modal>
+              <ModalReview
+                open={open}
+                onClose={setOpen}
+                userId={userId}
+                driverId={data.driver.id}
+              />
+            </>
+          ) : null}
         </View>
         {""}
         <View style={styles.viewBtn}>
           {isTrip ? (
             data.trip.isCompleted && userId !== data.driver.id ? (
-              <TouchableOpacity style={gStyles.btnGreen}>
+              <TouchableOpacity style={gStyles.btnGreen} onPress={reviewChange}>
                 <Text style={gStyles.text}>Оставить отзыв</Text>
               </TouchableOpacity>
             ) : data.trip.isCompleted === false && userId === data.driver.id ? (
@@ -238,5 +254,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginTop: 20,
+  },
+  modal: {
+    width: 310,
+    height: 344,
+    borderRadius: 5,
+    backgroundColor: "#FFF",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

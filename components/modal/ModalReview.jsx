@@ -3,35 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   TextInput,
   Modal,
+  Alert,
 } from "react-native";
-// import Modal from "@mui/material/Modal";
-// import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import { addReview } from "../../store/slices/reviewSlice";
+import { gStyles } from "../../assets/global styles/styles";
 
-const styleGlobal = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function ModalReview({ open, setOpen, userId, driverId }) {
-  const [rating, setRating] = useState(1);
+export default function ModalReview({ open, onClose, userId, driverId }) {
+  const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleRatingChange = (e) => {
     const newRating = parseInt(e, 10);
@@ -39,85 +24,104 @@ export default function ModalReview({ open, setOpen, userId, driverId }) {
   };
 
   const onSubmit = async () => {
-    const data = {
-      rating: rating,
-      comment: comment,
-      userId: userId,
-      driverId: driverId,
-    };
-    await dispatch(addReview(data));
-    setOpen(false);
+    if (rating >= 1 && rating <= 5) {
+      const data = {
+        rating: rating,
+        comment: comment,
+        userId: userId,
+        driverId: driverId,
+      };
+      await dispatch(addReview(data)).then(() => {
+        Alert.alert("Отзыв отправлен");
+        onClose(false);
+      });
+    } else {
+      Alert.alert("Вы можете поставить рейтинг только от 1 до 5");
+      setComment("");
+    }
   };
 
   return (
-    <View style={styles.FormReview}>
-      <Modal
-        style={styleGlobal}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <View style={styles.wrapper}>
-          <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
-            <Text style={{ textAlign: "center", fontSize: 18 }}>Рейтинг:</Text>
-            <TextInput
-              keyboardType="numeric"
-              maxLength={5}
-              placeholder="Введите рейтинг"
-              style={styles.inputRating}
-              onChangeText={(e) => handleRatingChange(e)}
-            />
-          </View>
-          <View style={{ marginTop: 30 }}>
-            <TextInput
-              placeholder="Введите отзыв *необязательное поле"
-              style={styles.inputReview}
-              onChangeText={(e) => setComment(e)}
-            />
-          </View>
-          <View>
-            <TouchableOpacity style={styles.btn} onPress={onSubmit}>
-              <Text>Оставить отзыв</Text>
-            </TouchableOpacity>
-          </View>
+    <Modal isVisible={open} style={styles.modal}>
+      <View style={styles.modalContent}>
+        <View>
+          <Text style={styles.text}>Отзыв</Text>
+          <TextInput
+            keyboardType="numeric"
+            maxLength={1}
+            placeholder="Введите рейтинг"
+            style={styles.input}
+            value={rating}
+            onChangeText={(e) => handleRatingChange(e)}
+          />
         </View>
-      </Modal>
-    </View>
+        <View style={{ marginTop: 30 }}>
+          <TextInput
+            placeholder="Введите отзыв *необязательное поле"
+            style={styles.textInput}
+            value={comment}
+            onChangeText={(e) => setComment(e)}
+          />
+        </View>
+        <View style={styles.viewBtn}>
+          <TouchableOpacity style={gStyles.btn} onPress={onSubmit}>
+            <Text style={gStyles.text}>Отправить отзыв</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={gStyles.btnRed}
+            onPress={() => onClose(false)}
+          >
+            <Text style={gStyles.text}>Закрыть</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  FormReview: {
-    width: 400,
-    height: 400,
+  modal: {
+    width: 310,
+    height: 344,
+    borderRadius: 5,
+    backgroundColor: "#FFF",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  wrapper: {
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  input: {
     width: "100%",
-    height: "100%",
-    marginTop: 60,
-    padding: 35,
-  },
-  btn: {
-    padding: 15,
-    backgroundColor: "green",
-    color: "white",
-    marginTop: 30,
-    borderRadius: 10,
-  },
-  inputReview: {
+    padding: 10,
+    height: 45,
+    borderRadius: 3,
     borderWidth: 1,
-    borderColor: "silver",
-    padding: 15,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    borderColor: "#00000080",
+    backgroundColor: "#F3F3F3",
   },
-  inputRating: {
-    width: 160,
+  textInput: {
+    width: "100%",
+    padding: 10,
+    height: 110,
+    borderRadius: 3,
     borderWidth: 1,
-    borderColor: "silver",
-    padding: 15,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    borderColor: "#00000080",
+    backgroundColor: "#F3F3F3",
+    marginBottom: 30,
+  },
+  text: {
+    color: "#000",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700",
+    paddingBottom: 16,
+  },
+  viewBtn: {
+    width: "100%",
+    gap: 30,
   },
 });

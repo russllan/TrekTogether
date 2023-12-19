@@ -10,15 +10,13 @@ export default ReviewPage = ({ route }) => {
   const renderReviewCard = useMemo(() => {
     return (
       <>
-        {result?.map((innerArray, outerIndex) => (
-          innerArray.map((item, innerIndex) => (
-            <ReviewCard
-              key={`${outerIndex}-${innerIndex}`}
-              name={item.userName}
-              rating={item.rating}
-              comment={item.comment}
-            />
-          ))
+        {result?.map((item) => (
+          <ReviewCard
+            key={item.id}
+            name={item.userName}
+            rating={item.rating}
+            comment={item.comment}
+          />
         ))}
       </>
     );

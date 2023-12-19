@@ -25,7 +25,7 @@ const reviewSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getReview.fulfilled, (state, action) => {
-        state.reviewData.result.push(action.payload);
+        state.reviewData.result = action.payload;
         state.reviewData.isLoading = false;
         state.reviewData.error = false;
     });
