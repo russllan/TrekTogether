@@ -15,16 +15,25 @@ import { useNavigation } from "@react-navigation/native";
 export default Form = () => {
   const [destination, setDestination] = useState("");
   const [arrival, setArrival] = useState("");
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("2024-09-20");
   const [active, setActive] = useState(false);
   const [amount, setAmount] = useState(1);
 
   const navigation = useNavigation();
 
+  const formatDate = (date) => {
+    const parsedDate = new Date(date); // Преобразуем строку в дату
+    if (isNaN(parsedDate)) {
+      // console.error("Invalid date:", date);
+      return null; // Возвращаем null или обрабатываем ошибку
+    }
+    return parsedDate.toISOString(); // Преобразуем в ISO-формат
+  };
+
   const enteredData = {
     departureCity: destination,
     arrivalCity: arrival,
-    departureData: selected,
+    departureData: formatDate(selected),
     availableSeats: amount,
   };
 

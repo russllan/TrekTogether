@@ -49,6 +49,16 @@ export default CreatePage = () => {
     }
   };
 
+  const formatDate = (date) => {
+    const parsedDate = new Date(date); // Преобразуем строку в дату
+    if (isNaN(parsedDate)) {
+      console.error("Invalid date:", date);
+      return null; // Возвращаем null или обрабатываем ошибку
+    }
+    console.log(parsedDate.toISOString());
+    return parsedDate.toISOString(); // Преобразуем в ISO-формат
+  };
+
   const onSubmit = async () => {
     const driverId = await GetUserID();
     const car = await getCarId();
@@ -57,7 +67,7 @@ export default CreatePage = () => {
       data = {
         departureCity: startPoint,
         arrivalCity: endPoint,
-        departureData: date,
+        departureData: formatDate(date),
         price: Number(price),
         availableSeats: amount,
         driverId: driverId,
@@ -67,7 +77,7 @@ export default CreatePage = () => {
       data = {
         departureCity: startPoint,
         arrivalCity: endPoint,
-        departureData: date,
+        departureData: formatDate(date),
         price: Number(price),
         availableSeats: amount,
         driverId: driverId,
@@ -126,6 +136,7 @@ export default CreatePage = () => {
     setEndPoint("");
     setPrice("");
     setDate("");
+    console.log(data);
   };
 
   return (

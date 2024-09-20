@@ -3,15 +3,16 @@ import Api from "../../api/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const trip = createAsyncThunk("trip", async (data) => {
+  console.log("Data being sent: ", data);
   const response = await Api.trip.trip(data);
-  // console.log(response);
+  console.log(response);
   return response;
 });
 
 export const addTrip = createAsyncThunk("addTrip", async (addTripData) => {
-  console.log(addTripData);
+  console.log("addTripData", addTripData);
   const response = await Api.trip.addTrip(addTripData);
-  console.log(response);
+  console.log("response", response);
   return response;
 });
 
@@ -40,7 +41,10 @@ export const deleteUserTrip = createAsyncThunk(
   "deleteUserTrip",
   async (userTrip) => {
     console.log(userTrip.tripId);
-    const response = await Api.trip.deleteUserTrip(userTrip.id, userTrip.tripId);
+    const response = await Api.trip.deleteUserTrip(
+      userTrip.id,
+      userTrip.tripId
+    );
     console.log(response);
     return response;
   }
@@ -57,7 +61,7 @@ export const completeTrip = createAsyncThunk("completeTrip", async (id) => {
   const response = await Api.trip.completeTrip(id);
   console.log(response);
   return response;
-})
+});
 
 const initState = {
   Trip: {
@@ -94,8 +98,8 @@ const initState = {
   completeTrip: {
     id: [],
     isLoading: false,
-    isError: true
-  }
+    isError: true,
+  },
 };
 
 const tripSlice = createSlice({
@@ -111,7 +115,8 @@ const tripSlice = createSlice({
     builder.addCase(trip.pending, (state) => {
       state.Trip.isLoading = true;
     });
-    builder.addCase(trip.rejected, (state) => {
+    builder.addCase(trip.rejected, (state, action) => {
+      console.error("Error: ", action.error);
       state.Trip.error = true;
       state.Trip.isLoading = false;
     });
@@ -125,8 +130,9 @@ const tripSlice = createSlice({
       state.AddTrip.isLoading = true;
       state.AddTrip.isDriver = false;
     });
-    builder.addCase(addTrip.rejected, (state) => {
-      state.AddTrip.error = true; 
+    builder.addCase(addTrip.rejected, (state, action) => {
+      console.error("Error: ", action.error);
+      state.AddTrip.error = true;
       state.AddTrip.isLoading = false;
       state.AddTrip.isDriver = false;
     });
@@ -185,16 +191,15 @@ const tripSlice = createSlice({
       state.completeTrip.isError = false;
       state.completeTrip.isLoading = false;
       state.AddTrip.isDriver = false;
-    })
+    });
     builder.addCase(completeTrip.pending, (state) => {
       state.completeTrip.isError = true;
       state.completeTrip.isLoading = true;
-    })
+    });
     builder.addCase(completeTrip.rejected, (state) => {
       state.completeTrip.isError = true;
       state.completeTrip.isLoading = false;
-    })
-
+    });
   },
 });
 
