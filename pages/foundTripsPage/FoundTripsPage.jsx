@@ -14,15 +14,15 @@ export default function FoundTrips({ route }) {
   const isLoading = useSelector((state) => state.trip.Trip.isLoading);
 
   useEffect(() => {
-    dispatch(trip(enteredData));
     const fetchData = async () => {
       try {
         const id = await GetUserID();
         setUserID(id);
-        dispatch(trip(enteredData));
+        dispatch(trip(enteredData)); // вызов после получения userID
       } catch (error) {
+        console.error(error);
       }
-    }
+    };
     fetchData();
   }, []);
 
